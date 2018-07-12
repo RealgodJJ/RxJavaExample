@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">RxJavaDemo</string>
+    <string name="clock">时钟</string>
+    <string name="alarm_clock">闹钟</string>
+    <string name="timer">计时</string>
+    <string name="remove_alarm">删除设定</string>
+    <string name="history_of_today">历史上的今天</string>
+    <string name="set_alarm">设定闹钟</string>
+    <string name="add_time_plan">添加时间计划</string>
+    <string name="add_memorial_day">添加纪念日</string>
+    <string name="edit">编辑</string>
+    <string name="ADD">ADD</string>
+</resources>

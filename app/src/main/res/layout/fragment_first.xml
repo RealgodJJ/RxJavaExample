@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_show_time_and_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                tools:ignore="UselessParent">
+
+                <ImageView
+                    android:id="@+id/clock_background"
+                    android:layout_width="210dp"
+                    android:layout_height="210dp"
+                    android:background="@drawable/clock_background"
+                    android:scaleType="centerInside"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <com.example.realgodjj.rxjavademo.widget.TimeKeeperView
+                    android:id="@+id/image_clock_inner"
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    app:tkv_background="@drawable/things"
+                    app:tkv_backgroundColor="@color/white"
+                    app:tkv_hourColor="@color/black"
+                    app:tkv_hourRatio="0.427"
+                    app:tkv_hourWidth="@dimen/px4"
+                    app:tkv_lineBlurRadius="@dimen/px4"
+                    app:tkv_markBlurRadius="@dimen/px6"
+                    app:tkv_markColor="@color/black"
+                    app:tkv_markRadius="@dimen/px10"
+                    app:tkv_minColor="@color/black"
+                    app:tkv_minRatio="0.619"
+                    app:tkv_minWidth="@dimen/px2"
+                    app:tkv_pointColor="@color/point_blue"
+                    app:tkv_pointRadius="@dimen/px10"
+                    app:tkv_secColor="@color/second_blue"
+                    app:tkv_secRatio="0.884"
+                    app:tkv_secWidth="@dimen/px1"
+                    app:tkv_textColor="@color/figure_black"
+                    app:tkv_textSize="@dimen/px40" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_history_of_today"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="@string/history_of_today"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_centerHorizontal="true"/>-->
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- custom color is here -->
+    <color name="main_background">#eca2a2</color>
+    <color name="dark_blue_background">#2e1cf5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#1B1B22</color>
+    <color name="point_blue">#64CFFE</color>
+    <color name="second_blue">#2DBFFF</color>
+    <color name="figure_black">#41445A</color>
+    <color name="solid">#9642c0ff</color>
+    <color name="menu_text_color">#101010</color>
+    <color name="top_bar_color">#fffaad</color>
+    <color name="bottom_util_color">#92e9a9</color>
+    <color name="bottom_util_color_selected">#7b81fc</color>
+
+</resources>

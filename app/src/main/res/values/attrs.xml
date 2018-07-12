@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TimeKeeperView">
+        <attr name="tkv_backgroundColor" format="color" />
+        <attr name="tkv_background" format="reference" />
+        <attr name="tkv_hourColor" format="color" />
+        <attr name="tkv_hourRatio" format="float" />
+        <attr name="tkv_hourWidth" format="dimension" />
+        <attr name="tkv_markColor" format="color" />
+        <attr name="tkv_markRadius" format="dimension" />
+        <attr name="tkv_minColor" format="color" />
+        <attr name="tkv_minRatio" format="float" />
+        <attr name="tkv_minWidth" format="dimension" />
+        <attr name="tkv_pointColor" format="color" />
+        <attr name="tkv_pointRadius" format="dimension" />
+        <attr name="tkv_secColor" format="color" />
+        <attr name="tkv_secRatio" format="float" />
+        <attr name="tkv_secWidth" format="dimension" />
+        <attr name="tkv_textColor" format="color" />
+        <attr name="tkv_textSize" format="dimension" />
+        <attr name="tkv_lineBlurRadius" format="dimension" />
+        <attr name="tkv_markBlurRadius" format="dimension" />
+    </declare-styleable>
+</resources>

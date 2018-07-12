@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_add_time_plan"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/rectangle_bolder">
+
+        <TextView
+            android:id="@+id/tv_add_time_plan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/add_alarm_clock"
+            android:drawablePadding="5sp"
+            android:gravity="center_vertical"
+            android:text="@string/add_time_plan" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_add_memorial_day"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/rectangle_bolder">
+
+        <TextView
+            android:id="@+id/tv_add_memorial_day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/add_things"
+            android:drawablePadding="5sp"
+            android:gravity="center_vertical"
+            android:text="@string/add_memorial_day" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/rectangle_bolder">
+
+        <TextView
+            android:id="@+id/tv_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/edit"
+            android:drawablePadding="5sp"
+            android:gravity="center_vertical"
+            android:text="@string/edit" />
+
+    </LinearLayout>
+
+</LinearLayout>
