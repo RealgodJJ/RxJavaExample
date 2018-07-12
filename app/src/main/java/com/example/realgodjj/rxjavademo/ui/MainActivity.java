@@ -5,12 +5,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +33,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    private CommonPopupWindow commonPopupWindow;
-    private TopBarPopupWindow topBarPopupWindow;
+    //    private CommonPopupWindow commonPopupWindow;
+    private PopupWindow topBarPopupWindow;
     private NoScrollViewPager nsvpMain;
     private List<Fragment> fragmentList;
 //    private Fragment[] fragments;
@@ -57,14 +60,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initViews();
         setViewPagerEvent();
         initListeners();
-    }
 
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//    }
-//
+    }
 
     @Override
     protected void onRestart() {
@@ -116,25 +113,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         buttonPageAlarmClock.setOnClickListener(this);
         buttonPageTimer.setOnClickListener(this);
         buttonMenu.setOnClickListener(this);
-    }
-
-    private void menuDown() {
-        toast("MENUDOWN!!!");
-        if (topBarPopupWindow == null) {
-            topBarPopupWindow = new TopBarPopupWindow(MainActivity.this, this,  360, 290);
-            topBarPopupWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus){
-                        topBarPopupWindow.dismiss();
-                    }
-                }
-            });
-        }
-        topBarPopupWindow.setFocusable(true);
-        topBarPopupWindow.showAsDropDown(buttonMenu, 0, 0);
-        topBarPopupWindow.update();
-        Log.e("TAG", "It's my Menu!!!");
     }
 
     private void setViewPagerEvent() {
@@ -197,6 +175,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.fl_page_timer:
                 setPageTimer();
                 break;
+
             case R.id.bt_menu:
                 setButtonMenu();
                 break;
@@ -204,6 +183,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    private void setButtonMenu() {
+        if (topBarPopupWindow == null) {
+            topBarPopupWindow = new TopBarPopupWindow(MainActivity.this,
+                    this, ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT, true);
+            topBarPopupWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) {
+                        topBarPopupWindow.dismiss();
+                    }
+                }
+            });
+        }
+        topBarPopupWindow.showAsDropDown(buttonMenu, -80, 23);
+        topBarPopupWindow.update();
     }
 
     private void setPageClock() {
@@ -246,17 +243,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         textTimer.setTextColor(getResources().getColor(R.color.white));
         textClock.setTextColor(getResources().getColor(R.color.black));
         textAlarmClock.setTextColor(getResources().getColor(R.color.black));
-    }
-
-    private void setButtonMenu() {
-        if (i % 2 == 1) {
-            buttonMenu.setBackgroundResource(R.drawable.menu_up);
-            menuDown();
-            i++;
-        } else if (i % 2 == 0) {
-            buttonMenu.setBackgroundResource(R.drawable.menu_down);
-            i--;
-        }
     }
 
     @Override
@@ -316,5 +302,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                break;
 //        }
 //    }
+
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//    }
+//
 }
 
