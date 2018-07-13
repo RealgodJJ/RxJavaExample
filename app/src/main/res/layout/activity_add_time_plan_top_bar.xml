@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/top_bar_ooooo"
     android:layout_width="match_parent"
     android:layout_height="43dp"
-    android:background="@drawable/src_top"
-    android:minHeight="?attr/actionBarSize"
-    android:orientation="vertical">
+    android:background="@drawable/src_top">
+
+    <Button
+        android:id="@+id/bt_cancel_plan"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/cancel" />
 
     <TextView
-        android:id="@+id/tv_top_title"
+        android:id="@+id/tv_top_add_time_plan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center_horizontal"
-        android:text="@string/clock"
+        android:text="@string/add_time_plan"
         android:textColor="@color/menu_text_color"
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/bt_menu"
+        android:id="@+id/bt_add_plan"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_alignParentEnd="true"
         android:layout_gravity="end"
         android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:onClick="setButtonMenu"
-        android:background="@drawable/menu_down"
-        tools:ignore="KeyboardInaccessibleWidget" />
-    <!--android:onClick="setButtonMenu"-->
+        android:background="@drawable/save" />
 
 </android.support.v7.widget.Toolbar>

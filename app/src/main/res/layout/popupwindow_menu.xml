@@ -19,7 +19,8 @@
             android:drawablePadding="5sp"
             android:drawableStart="@drawable/add_alarm_clock"
             android:gravity="center_vertical"
-            android:text="@string/add_time_plan" />
+            android:text="@string/add_time_plan_space"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -36,7 +37,8 @@
             android:drawablePadding="5sp"
             android:drawableStart="@drawable/add_things"
             android:gravity="center_vertical"
-            android:text="@string/add_memorial_day" />
+            android:text="@string/add_memorial_day"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -53,7 +55,8 @@
             android:drawablePadding="5sp"
             android:drawableStart="@drawable/edit"
             android:gravity="center_vertical"
-            android:text="@string/edit" />
+            android:text="@string/edit"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

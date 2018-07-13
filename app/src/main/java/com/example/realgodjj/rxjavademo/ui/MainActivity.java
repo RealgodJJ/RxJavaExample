@@ -5,15 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +19,7 @@ import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.ui.Fragment.FirstFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.SecondFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.ThirdFragment;
-import com.example.realgodjj.rxjavademo.utils.StatusBarUtils;
-import com.example.realgodjj.rxjavademo.utils.TopBarPopupWindow;
+//import com.example.realgodjj.rxjavademo.utils.TopBarPopupWindow;
 import com.example.realgodjj.rxjavademo.widget.CommonPopupWindow;
 import com.example.realgodjj.rxjavademo.widget.NoScrollViewPager;
 
@@ -33,15 +29,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
-    //    private CommonPopupWindow commonPopupWindow;
     private Toolbar toolbar;
-    private PopupWindow topBarPopupWindow;
+    //    private PopupWindow topBarPopupWindow;
     private CommonPopupWindow commonPopupWindow;
     private NoScrollViewPager nsvpMain;
     private List<Fragment> fragmentList;
 //    private Fragment[] fragments;
 
-    //    private LinearLayout linearBottomUtil;
     private FrameLayout frameClock, frameAlarmClock, frameTimer;
     private ImageView buttonPageClock, buttonPageAlarmClock, buttonPageTimer;
     private TextView textTitle, textClock, textAlarmClock, textTimer;
@@ -57,12 +51,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void setContentView() {
+        super.setContentView();
         setContentView(R.layout.activity_main);
-        StatusBarUtils.setWindowStatusBarColor(this, R.color.colorPrimaryDark);
         initViews();
         setViewPagerEvent();
         initListeners();
-
     }
 
     @Override
@@ -72,8 +65,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initViews() {
+        super.initViews();
         //顶部标题
-        toolbar = findViewById(R.id.top_bar);
+        toolbar = findViewById(R.id.activity_main_top_bar);
         initToolBar(toolbar, "", false);
         textTitle = findViewById(R.id.tv_top_title);
 
@@ -108,6 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void initListeners() {
+        super.initListeners();
         frameClock.setOnClickListener(this);
         frameAlarmClock.setOnClickListener(this);
         frameTimer.setOnClickListener(this);
@@ -188,23 +183,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public void setButtonMenu() {
-//        if (topBarPopupWindow == null) {
-//            topBarPopupWindow = new TopBarPopupWindow(MainActivity.this,
-//                    this, ViewGroup.LayoutParams.WRAP_CONTENT,
-//                    ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//            topBarPopupWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//                @Override
-//                public void onFocusChange(View v, boolean hasFocus) {
-//                    if (!hasFocus) {
-//                        topBarPopupWindow.dismiss();
-//                    }
-//                }
-//            });
-//        }
-//        topBarPopupWindow.showAsDropDown(buttonMenu, -80, 23);
-//        topBarPopupWindow.update();
-//        toast("FUCKKKKKKKKKKKKKKKKKKKkkkkkk!!!!!");
-
         commonPopupWindow = new CommonPopupWindow.Builder(this)
                 .setView(R.layout.popupwindow_menu)
                 .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -219,7 +197,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 addTimePlan.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Log.e("TAG", "ADDTIMEPLAN SUCCESS!!!!");
+                                        MainActivity.this.startActivity(new Intent(MainActivity.this, AddTimePlanActivity.class));
+                                        commonPopupWindow.dismiss();
                                     }
                                 });
                                 addMemorialDay.setOnClickListener(new View.OnClickListener() {
@@ -234,7 +213,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 })
                 .setOutsideTouchable(true)
                 .create();
-        commonPopupWindow.showAsDropDown(buttonMenu, -80, 23);
+        commonPopupWindow.showAsDropDown(buttonMenu, -150, 24);
         commonPopupWindow.update();
     }
 
@@ -314,35 +293,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 
-
-//    @Override
-//    public void getChildView(View view, int layoutResId) {
-//        //获得PopupWindow布局里的View
-//        switch (layoutResId) {
-//            case R.layout.popupwindow_menu:
-//                TextView addTimePlan = view.findViewById(R.id.tv_add_time_plan);
-//                TextView addMemorialDay = view.findViewById(R.id.tv_add_memorial_day);
-//                addTimePlan.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Log.e("TAG", "ADDTIMEPLAN SUCCESS!!!!");
-//                    }
-//                });
-//                addMemorialDay.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Log.e("TAG", "ADDMEMORIALDAY SUCESS!!!");
-//                    }
-//                });
-//                break;
-//        }
-//    }
-
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//    }
-//
 }
+
+//Another way to make a PopupWindow
+//        if (topBarPopupWindow == null) {
+//            topBarPopupWindow = new TopBarPopupWindow(MainActivity.this,
+//                    this, ViewGroup.LayoutParams.WRAP_CONTENT,
+//                    ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//            topBarPopupWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    if (!hasFocus) {
+//                        topBarPopupWindow.dismiss();
+//                    }
+//                }
+//            });
+//        }
+//        topBarPopupWindow.showAsDropDown(buttonMenu, -80, 23);
+//        topBarPopupWindow.update();
+//        toast("FUCKKKKKKKKKKKKKKKKKKKkkkkkk!!!!!");
 

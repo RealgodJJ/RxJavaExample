@@ -1,16 +1,18 @@
 <resources>
-    <string name="app_name">RxJavaDemo</string>
+    <string name="app_name">Our Love</string>
     <string name="clock">时钟</string>
     <string name="alarm_clock">闹钟</string>
     <string name="timer">计时</string>
     <string name="remove_alarm">删除设定</string>
     <string name="history_of_today">历史上的今天</string>
     <string name="set_alarm">设定闹钟</string>
-    <string name="add_time_plan">添加时间计划\t\t\t</string>
+    <string name="add_time_plan_space">添加时间计划\t\t\t</string>
+    <string name="add_time_plan">添加时间计划</string>
     <string name="add_memorial_day">添加纪念日</string>
     <string name="edit">编辑</string>
+    <string name="add_plan_success">添加计划成功！</string>
+
     <string name="ADD">ADD</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
