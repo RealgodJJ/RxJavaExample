@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -15,11 +16,10 @@
             android:id="@+id/tv_add_time_plan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/add_alarm_clock"
             android:drawablePadding="5sp"
+            android:drawableStart="@drawable/add_alarm_clock"
             android:gravity="center_vertical"
             android:text="@string/add_time_plan" />
-
 
     </LinearLayout>
 
@@ -33,8 +33,8 @@
             android:id="@+id/tv_add_memorial_day"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/add_things"
             android:drawablePadding="5sp"
+            android:drawableStart="@drawable/add_things"
             android:gravity="center_vertical"
             android:text="@string/add_memorial_day" />
 
@@ -50,8 +50,8 @@
             android:id="@+id/tv_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/edit"
             android:drawablePadding="5sp"
+            android:drawableStart="@drawable/edit"
             android:gravity="center_vertical"
             android:text="@string/edit" />
 

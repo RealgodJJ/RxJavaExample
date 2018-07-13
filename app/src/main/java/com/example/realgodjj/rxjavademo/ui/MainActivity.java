@@ -34,7 +34,9 @@ import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     //    private CommonPopupWindow commonPopupWindow;
+    private Toolbar toolbar;
     private PopupWindow topBarPopupWindow;
+    private CommonPopupWindow commonPopupWindow;
     private NoScrollViewPager nsvpMain;
     private List<Fragment> fragmentList;
 //    private Fragment[] fragments;
@@ -71,7 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initViews() {
         //顶部标题
-        Toolbar toolbar = findViewById(R.id.top_bar);
+        toolbar = findViewById(R.id.top_bar);
         initToolBar(toolbar, "", false);
         textTitle = findViewById(R.id.tv_top_title);
 
@@ -185,22 +187,55 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private void setButtonMenu() {
-        if (topBarPopupWindow == null) {
-            topBarPopupWindow = new TopBarPopupWindow(MainActivity.this,
-                    this, ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT, true);
-            topBarPopupWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        topBarPopupWindow.dismiss();
+    public void setButtonMenu() {
+//        if (topBarPopupWindow == null) {
+//            topBarPopupWindow = new TopBarPopupWindow(MainActivity.this,
+//                    this, ViewGroup.LayoutParams.WRAP_CONTENT,
+//                    ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//            topBarPopupWindow.getContentView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    if (!hasFocus) {
+//                        topBarPopupWindow.dismiss();
+//                    }
+//                }
+//            });
+//        }
+//        topBarPopupWindow.showAsDropDown(buttonMenu, -80, 23);
+//        topBarPopupWindow.update();
+//        toast("FUCKKKKKKKKKKKKKKKKKKKkkkkkk!!!!!");
+
+        commonPopupWindow = new CommonPopupWindow.Builder(this)
+                .setView(R.layout.popupwindow_menu)
+                .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setAnimationStyle(R.style.AnimDown)
+                .setViewOnclickListener(new CommonPopupWindow.ViewInterface() {
+                    @Override
+                    public void getChildView(View view, int layoutResId) {
+                        switch (layoutResId) {
+                            case R.layout.popupwindow_menu:
+                                TextView addTimePlan = view.findViewById(R.id.tv_add_time_plan);
+                                TextView addMemorialDay = view.findViewById(R.id.tv_add_memorial_day);
+                                addTimePlan.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Log.e("TAG", "ADDTIMEPLAN SUCCESS!!!!");
+                                    }
+                                });
+                                addMemorialDay.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Log.e("TAG", "ADDMEMORIALDAY SUCESS!!!");
+                                    }
+                                });
+                                break;
+                        }
                     }
-                }
-            });
-        }
-        topBarPopupWindow.showAsDropDown(buttonMenu, -80, 23);
-        topBarPopupWindow.update();
+                })
+                .setOutsideTouchable(true)
+                .create();
+        commonPopupWindow.showAsDropDown(buttonMenu, -80, 23);
+        commonPopupWindow.update();
     }
 
     private void setPageClock() {
@@ -279,10 +314,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 
+
 //    @Override
 //    public void getChildView(View view, int layoutResId) {
 //        //获得PopupWindow布局里的View
-////        view = findViewById(R.id.top_bar);
 //        switch (layoutResId) {
 //            case R.layout.popupwindow_menu:
 //                TextView addTimePlan = view.findViewById(R.id.tv_add_time_plan);

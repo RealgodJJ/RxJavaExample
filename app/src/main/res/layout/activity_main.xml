@@ -20,5 +20,4 @@
         android:id="@+id/bottom_bar"
         layout="@layout/bottom_bar" />
 
-
 </LinearLayout>

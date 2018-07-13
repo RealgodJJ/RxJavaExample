@@ -110,6 +110,7 @@ public class CommonPopupWindow extends PopupWindow {
         /**
          * 设置动画
          *
+         * @param animationStyle
          * @return Builder
          */
         public Builder setAnimationStyle(int animationStyle) {
@@ -129,4 +130,3 @@ public class CommonPopupWindow extends PopupWindow {
         }
     }
 }
-
