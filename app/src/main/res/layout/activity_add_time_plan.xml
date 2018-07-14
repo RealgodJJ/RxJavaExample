@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:theme="@style/my_edit_text"
+
     tools:context=".ui.AddTimePlanActivity">
 
     <include
@@ -11,26 +13,68 @@
         layout="@layout/activity_add_time_plan_top_bar" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="43dp">
+
+        style="@style/screen_margin">
+
+        <EditText
+            android:id="@+id/et_plan_title"
+            style="@style/et_style"
+            android:hint="@string/title"
+            tools:ignore="TextFields" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="43dp">
+
+        style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_location"
+            style="@style/iv_style"
+            android:src="@drawable/location_dark"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_location"
+            style="@style/et_style"
+            android:hint="@string/location"
+            tools:ignore="TextFields" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="43dp">
+    <LinearLayout style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_all_day"
+            style="@style/iv_style"
+            android:src="@drawable/all_day_dark"
+            tools:ignore="ContentDescription" />
+
+        <FrameLayout
+            android:id="@+id/fl_all_day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/et_all_day"
+                style="@style/et_style"
+                android:enabled="false"
+                android:text="@string/not_all_day"
+                android:textColor="@color/black"
+                tools:ignore="LabelFor,TextFields" />
+
+            <ch.ielse.view.SwitchView
+                android:id="@+id/sv_all_day"
+                android:layout_width="46dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="43dp">
+    <LinearLayout style="@style/screen_margin">
 
     </LinearLayout>
 

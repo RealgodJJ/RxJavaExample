@@ -123,7 +123,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void toast(String str) {
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    public void toast(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
 }

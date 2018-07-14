@@ -5,7 +5,6 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
 
-
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -19,15 +18,34 @@
         <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
 
-    <style name="style0">
-        <item name="android:textSize">19dp</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="screen_margin">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">43dp</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
-    <style name="AnimDown" parent="@android:style/Animation">
+    <style name="anim_down" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/push_scale_in</item>
         <item name="android:windowExitAnimation">@anim/push_scale_out</item>
     </style>
 
+    <style name="my_edit_text" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@android:color/holo_orange_dark</item>
+    </style>
+
+    <style name="iv_style">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="et_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_color</item>
+    </style>
 
 </resources>

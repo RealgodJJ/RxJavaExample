@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Our Love</string>
+    <string name="key_again_exit">再按一次回退键退出程序</string>
     <string name="clock">时钟</string>
     <string name="alarm_clock">闹钟</string>
     <string name="timer">计时</string>
@@ -10,8 +11,17 @@
     <string name="add_time_plan">添加时间计划</string>
     <string name="add_memorial_day">添加纪念日</string>
     <string name="edit">编辑</string>
-    <string name="add_plan_success">添加计划成功！</string>
 
+
+    <!-- 添加时间计划页面 -->
+    <string name="add_plan_success">添加计划成功！</string>
+    <string name="title">标题</string>
+    <string name="location">地点</string>
+    <string name="all_day">全天</string>
+    <string name="not_all_day">选择时段</string>
+    <string name="null_title">标题不能为空！</string>
+
+    <!-- expansion -->
     <string name="ADD">ADD</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

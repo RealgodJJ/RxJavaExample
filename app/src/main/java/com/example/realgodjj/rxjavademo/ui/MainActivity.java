@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.realgodjj.rxjavademo.Adapter.MyFragmentPagerAdapter;
 import com.example.realgodjj.rxjavademo.R;
@@ -186,7 +185,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         commonPopupWindow = new CommonPopupWindow.Builder(this)
                 .setView(R.layout.popupwindow_menu)
                 .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                .setAnimationStyle(R.style.AnimDown)
+                .setAnimationStyle(R.style.anim_down)
                 .setViewOnclickListener(new CommonPopupWindow.ViewInterface() {
                     @Override
                     public void getChildView(View view, int layoutResId) {
@@ -276,7 +275,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (!isQuit) {
                 isQuit = true;
-                Toast.makeText(getApplicationContext(), "再按一次回退键退出程序", Toast.LENGTH_SHORT).show();
+                toast(R.string.key_again_exit);
                 TimerTask task;
                 task = new TimerTask() {
                     @Override
