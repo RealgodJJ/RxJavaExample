@@ -4,17 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/my_edit_text"
-
+    android:theme="@style/my_edit_text_style"
     tools:context=".ui.AddTimePlanActivity">
 
     <include
         android:id="@+id/activity_add_time_plan_top_bar"
         layout="@layout/activity_add_time_plan_top_bar" />
 
-    <LinearLayout
-
-        style="@style/screen_margin">
+    <LinearLayout style="@style/screen_margin">
 
         <EditText
             android:id="@+id/et_plan_title"
@@ -24,9 +21,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-
-        style="@style/screen_margin">
+    <LinearLayout style="@style/screen_margin">
 
         <ImageView
             android:id="@+id/iv_location"
@@ -74,9 +69,105 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/screen_margin">
+    <LinearLayout
+        android:id="@+id/ll_start"
+        style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_tick_1"
+            style="@style/iv_style"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_start"
+            style="@style/iv_style"
+            android:src="@drawable/start"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_start"
+            style="@style/et_style"
+            android:hint="@string/start"
+            tools:ignore="TextFields" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_end"
+        style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_tick_2"
+            style="@style/iv_style"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_end"
+            style="@style/iv_style"
+            android:src="@drawable/end"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_end"
+            style="@style/et_style"
+            android:hint="@string/end"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/screen_margin"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_context"
+            style="@style/iv_style"
+            android:src="@drawable/context"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/context"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_reminder"
+        style="@style/screen_margin"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_reminder"
+            style="@style/iv_style"
+            android:src="@drawable/reminder"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/reminder"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/screen_margin">
+
+        <Button
+            android:id="@+id/bt_more"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/src_more_button"
+            android:text="@string/more"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

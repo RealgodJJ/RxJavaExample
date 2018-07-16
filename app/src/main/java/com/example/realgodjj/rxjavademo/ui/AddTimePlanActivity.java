@@ -1,5 +1,6 @@
 package com.example.realgodjj.rxjavademo.ui;
 
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.realgodjj.rxjavademo.R;
 
@@ -14,9 +16,10 @@ import ch.ielse.view.SwitchView;
 
 public class AddTimePlanActivity extends BaseActivity implements View.OnClickListener {
     private Toolbar toolbar;
-    private Button btCancel, btSave;
+    private Button btCancel, btSave, btMore;
     private ImageView ivLocation, ivAllDay;
-    private EditText etTitle, etLocation, etAllDay;
+    private LinearLayout llStart, llEnd, llReminder;
+    private EditText etTitle, etLocation, etAllDay, etContext;
     private SwitchView switchView;
 
     @Override
@@ -35,6 +38,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
 
         btCancel = findViewById(R.id.bt_cancel_plan);
         btSave = findViewById(R.id.bt_add_plan);
+        btMore = findViewById(R.id.bt_more);
 
         ivLocation = findViewById(R.id.iv_location);
         ivAllDay = findViewById(R.id.iv_all_day);
@@ -42,8 +46,12 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         etTitle = findViewById(R.id.et_plan_title);
         etLocation = findViewById(R.id.et_location);
         etAllDay = findViewById(R.id.et_all_day);
+        etContext = findViewById(R.id.et_context);
 
         switchView = findViewById(R.id.sv_all_day);
+        llStart = findViewById(R.id.ll_start);
+        llEnd = findViewById(R.id.ll_end);
+        llReminder = findViewById(R.id.ll_reminder);
 
         etLocation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,11 +80,14 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                 if (isOpened) {
                     ivAllDay.setImageResource(R.drawable.all_day_light);
                     etAllDay.setText(R.string.all_day);
+                    llStart.setVisibility(View.GONE);
+                    llEnd.setVisibility(View.GONE);
                 } else {
                     ivAllDay.setImageResource(R.drawable.all_day_dark);
                     etAllDay.setText(R.string.not_all_day);
+                    llStart.setVisibility(View.VISIBLE);
+                    llEnd.setVisibility(View.VISIBLE);
                 }
-
             }
         });
     }
@@ -86,6 +97,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         super.initListeners();
         btCancel.setOnClickListener(this);
         btSave.setOnClickListener(this);
+        btMore.setOnClickListener(this);
     }
 
     @Override
@@ -96,11 +108,25 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.bt_add_plan:
-//                toast("");
                 if (etTitle.getText().toString().equals(""))
                     toast(R.string.null_title);
-                else
+                else if (etLocation.getText().toString().equals(""))
+                    toast(R.string.null_location);
+                else if (etContext.getText().toString().equals(""))
+                    toast(R.string.null_context);
+                else {
+                    Intent intent = new Intent();
+                    intent.putExtra("title", etTitle.getText().toString())
+                            .putExtra("location", etLocation.getText().toString())
+                            .putExtra("context", etContext.getText().toString());
+                    setResult(1, intent);//requestCode=1
+                    finish();
                     toast(R.string.add_plan_success);
+                }
+                break;
+            case R.id.bt_more:
+                llReminder.setVisibility(View.VISIBLE);
+                btMore.setVisibility(View.GONE);
                 break;
         }
     }

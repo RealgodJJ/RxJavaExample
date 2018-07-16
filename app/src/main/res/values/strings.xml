@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Our Love</string>
+    <string name="app_name">爱的时差</string>
     <string name="key_again_exit">再按一次回退键退出程序</string>
     <string name="clock">时钟</string>
     <string name="alarm_clock">闹钟</string>
@@ -19,7 +19,14 @@
     <string name="location">地点</string>
     <string name="all_day">全天</string>
     <string name="not_all_day">选择时段</string>
+    <string name="start">开始</string>
+    <string name="end">结束</string>
+    <string name="context">填写相关的内容</string>
+    <string name="reminder">提醒</string>
+    <string name="more">更多</string>
     <string name="null_title">标题不能为空！</string>
+    <string name="null_location">地点不能为空！</string>
+    <string name="null_context">内容不能为空！</string>
 
     <!-- expansion -->
     <string name="ADD">ADD</string>

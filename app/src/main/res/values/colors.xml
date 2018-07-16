@@ -17,5 +17,6 @@
     <color name="top_bar_color">#fffaad</color>
     <color name="bottom_util_color">#92e9a9</color>
     <color name="bottom_util_color_selected">#7b81fc</color>
+    <color name="grey">#dfdfdf</color>
 
 </resources>

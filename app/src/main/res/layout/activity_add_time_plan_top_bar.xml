@@ -16,6 +16,8 @@
         android:id="@+id/tv_top_add_time_plan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableStart="@drawable/things"
+        android:drawablePadding="5dp"
         android:layout_gravity="center"
         android:text="@string/add_time_plan"
         android:textColor="@color/menu_text_color"
