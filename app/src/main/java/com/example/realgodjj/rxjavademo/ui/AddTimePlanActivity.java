@@ -118,7 +118,8 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                     Intent intent = new Intent();
                     intent.putExtra("title", etTitle.getText().toString())
                             .putExtra("location", etLocation.getText().toString())
-                            .putExtra("context", etContext.getText().toString());
+                            .putExtra("context", etContext.getText().toString())
+                            .putExtra("isAllDay", switchView.isOpened());
                     setResult(1, intent);//requestCode=1
                     finish();
                     toast(R.string.add_plan_success);

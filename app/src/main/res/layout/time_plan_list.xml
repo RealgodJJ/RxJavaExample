@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/iv_list_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/add_suceess"/>
+
+    <TextView
+        android:id="@+id/tv_list_title"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/iv_list_icon"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        tools:text="@string/add_plan_title"/>
+
+    <TextView
+        android:id="@+id/tv_list_time_location"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:layout_toEndOf="@id/tv_list_title"
+        tools:text="@string/add_plan_time_location"/>
+
+    <TextView
+        android:id="@+id/tv_list_context"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/tv_list_title"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/iv_list_icon"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textSize="15sp"
+        tools:text="@string/add_plan_context"/>
+
+</RelativeLayout>

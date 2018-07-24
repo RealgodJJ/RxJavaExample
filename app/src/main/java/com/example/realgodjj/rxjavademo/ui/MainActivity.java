@@ -18,6 +18,7 @@ import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.ui.Fragment.FirstFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.SecondFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.ThirdFragment;
+import com.example.realgodjj.rxjavademo.utils.TimePlan;
 import com.example.realgodjj.rxjavademo.widget.CommonPopupWindow;
 import com.example.realgodjj.rxjavademo.widget.NoScrollViewPager;
 
@@ -275,11 +276,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String title = data.getStringExtra("title");
                 String location = data.getStringExtra("location");
                 String context = data.getStringExtra("context");
+                Boolean isAllDay = data.getBooleanExtra("isAllDay", false);
                 Log.e("TAG", title);
                 Log.e("TAG", location);
                 Log.e("TAG", context);
+                TimePlan timePlan = new TimePlan(title, location, context, isAllDay);
                 List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-                ((FirstFragment)fragmentList.get(0)).updataUI(title + location + context);
+                ((FirstFragment)fragmentList.get(0)).updataUI(timePlan);
             }
         } else if (requestCode == addActivityRequestCodeOfPage1) {
             setPageAlarmClock();

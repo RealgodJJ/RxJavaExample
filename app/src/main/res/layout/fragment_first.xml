@@ -21,7 +21,8 @@
                 android:id="@+id/tv_show_time_and_date"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal" />
 
         </RelativeLayout>
 
@@ -33,24 +34,22 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 tools:ignore="UselessParent">
 
                 <ImageView
                     android:id="@+id/clock_background"
-                    android:layout_width="210dp"
-                    android:layout_height="210dp"
+                    android:layout_width="190dp"
+                    android:layout_height="190dp"
                     android:background="@drawable/clock_background"
                     android:scaleType="centerInside"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
                     tools:ignore="ContentDescription" />
 
                 <com.example.realgodjj.rxjavademo.widget.TimeKeeperView
                     android:id="@+id/image_clock_inner"
-                    android:layout_width="match_parent"
-                    android:layout_height="225dp"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:layout_gravity="center"
                     app:tkv_background="@drawable/things"
                     app:tkv_backgroundColor="@color/white"
                     app:tkv_hourColor="@color/black"
@@ -78,15 +77,23 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="3">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list_time_plan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/tv_get_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"/>
+                android:layout_centerInParent="true" />
 
         </RelativeLayout>
+
 
     </LinearLayout>
 

@@ -12,6 +12,10 @@
     <string name="add_memorial_day">添加纪念日</string>
     <string name="edit">编辑</string>
 
+    <!-- first fragment -->
+    <string name="add_plan_title">添加事件的题目</string>
+    <string name="add_plan_time_location">时间\n地点</string>
+    <string name="add_plan_context">添加事件的内容</string>
 
     <!-- 添加时间计划页面 -->
     <string name="add_plan_success">添加计划成功！</string>

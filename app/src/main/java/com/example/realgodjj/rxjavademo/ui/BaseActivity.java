@@ -12,10 +12,6 @@ import android.widget.Toast;
 
 import com.example.realgodjj.rxjavademo.R;
 
-/**
- * Created by MQ on 2017/1/16.
- */
-
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
 
