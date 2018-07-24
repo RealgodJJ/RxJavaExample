@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NewActivity">
+
+    <ImageView
+        android:id="@+id/iv_add_success"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:clickable="true"
+        android:src="@drawable/add_suceess"
+        android:tint="@drawable/src_tick"
+        tools:ignore="ContentDescription,KeyboardInaccessibleWidget" />
+    <!--android:tint="@color/src_tick"-->
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_below="@id/iv_add_success"
+        android:layout_centerHorizontal="true"
+        tools:ignore="ContentDescription,KeyboardInaccessibleWidget" />
+
+    <ImageView
+        android:id="@+id/image2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/image1"
+        tools:ignore="ContentDescription,KeyboardInaccessibleWidget" />
+
+    <!--<Button-->
+    <!--android:id="@+id/bt_change_color"-->
+    <!--android:layout_width="80dp"-->
+    <!--android:layout_height="30dp"-->
+    <!--android:layout_below="@id/iv_add_success"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="30dp" />-->
+
+</RelativeLayout>

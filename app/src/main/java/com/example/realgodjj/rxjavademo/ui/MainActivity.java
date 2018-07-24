@@ -1,9 +1,7 @@
 package com.example.realgodjj.rxjavademo.ui;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,7 +18,6 @@ import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.ui.Fragment.FirstFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.SecondFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.ThirdFragment;
-//import com.example.realgodjj.rxjavademo.utils.TopBarPopupWindow;
 import com.example.realgodjj.rxjavademo.widget.CommonPopupWindow;
 import com.example.realgodjj.rxjavademo.widget.NoScrollViewPager;
 
@@ -268,8 +265,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         textClock.setTextColor(getResources().getColor(R.color.black));
         textAlarmClock.setTextColor(getResources().getColor(R.color.black));
     }
-
-
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

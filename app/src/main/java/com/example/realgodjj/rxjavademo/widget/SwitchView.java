@@ -1,5 +1,6 @@
 package com.example.realgodjj.rxjavademo.widget;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -386,6 +387,7 @@ public class SwitchView extends View {
         if (sAnim > 0 || bAnim > 0) invalidate();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if ((state == STATE_SWITCH_ON || state == STATE_SWITCH_OFF) && (sAnim * bAnim == 0)) {

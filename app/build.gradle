@@ -50,4 +50,8 @@ dependencies {
     implementation 'com.github.promeg:tinypinyin:2.0.3'
     implementation 'com.github.promeg:tinypinyin-lexicons-android-cncity:2.0.3'
     implementation 'ch.ielse:switchbutton:1.0.1'
+
+    //sqlcipher 数据库加密
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.9'
+
 }

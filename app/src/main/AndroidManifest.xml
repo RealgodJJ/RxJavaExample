@@ -17,6 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.AddTimePlanActivity" />
+        <activity android:name=".ui.NewActivity">
+
+        </activity>
     </application>
 
 </manifest>

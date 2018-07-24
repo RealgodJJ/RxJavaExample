@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">爱的时差</string>
+    <string name="app_name">app_name</string>
     <string name="key_again_exit">再按一次回退键退出程序</string>
     <string name="clock">时钟</string>
     <string name="alarm_clock">闹钟</string>
