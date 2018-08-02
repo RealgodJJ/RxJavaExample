@@ -11,11 +11,19 @@
     <string name="add_time_plan">添加时间计划</string>
     <string name="add_memorial_day">添加纪念日</string>
     <string name="edit">编辑</string>
+    <string name="tip_permission">该应用需要获取存储空间，为你存储个人信息；\n否则，您将无法正常使用该应用</string>
+    <string name="tip_permission_title">存储权限不可用</string>
+    <string name="open_permission">立即开启</string>
+    <string name="cancel">取消</string>
+    <string name="get_permission_success">获取权限成功！</string>
+    <string name="tip_permission_again">请在-应用设置-权限-中，允许支付宝使用存储权限来保存用户数据</string>
 
     <!-- first fragment -->
     <string name="add_plan_title">添加事件的题目</string>
     <string name="add_plan_time_location">时间\n地点</string>
     <string name="add_plan_context">添加事件的内容</string>
+    <string name="add_plan_fail">添加事件失败</string>
+    <string name="get_information_error">获取信息错误</string>
 
     <!-- 添加时间计划页面 -->
     <string name="add_plan_success">添加计划成功！</string>

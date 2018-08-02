@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdapter.ViewHolder> {
@@ -33,7 +32,7 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
     public void onBindViewHolder(@NonNull MyRecycleViewAdapter.ViewHolder holder, int position) {
         holder.tvPlanTitle.setText(timePlanList.get(position).getTitle());
         holder.tvPlanLocation.setText(timePlanList.get(position).getLocation());
-        holder.tvPlanContext.setText(timePlanList.get(position).getTitle());
+        holder.tvPlanContext.setText(timePlanList.get(position).getContext());
     }
 
     @Override
@@ -41,28 +40,17 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
         return timePlanList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         @SuppressLint("StaticFieldLeak")
         TextView tvPlanTitle;
         TextView tvPlanContext;
         TextView tvPlanLocation;
+
         ViewHolder(View itemView) {
             super(itemView);
             tvPlanTitle = itemView.findViewById(R.id.tv_list_title);
             tvPlanLocation = itemView.findViewById(R.id.tv_list_time_location);
             tvPlanContext = itemView.findViewById(R.id.tv_list_context);
-        }
-
-        public TextView getTvPlanContext() {
-            return tvPlanContext;
-        }
-
-        public TextView getTvPlanLocation() {
-            return tvPlanLocation;
-        }
-
-        public TextView getTvPlanTitle() {
-            return tvPlanTitle;
         }
     }
 }

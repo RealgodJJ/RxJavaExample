@@ -15,13 +15,12 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.realgodjj.rxjavademo.Adapter.MyRecycleViewAdapter;
 import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.base.BaseSubscriber;
+import com.example.realgodjj.rxjavademo.utils.SharedPreferencesUtil;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
 import com.example.realgodjj.rxjavademo.widget.TimeKeeperView;
 
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
@@ -120,15 +118,14 @@ public class FirstFragment extends Fragment {
         tvTimeShow.setText(spannable);
     }
 
-    public void updataUI(TimePlan timePlan) {
+    public void updataUI(TimePlan timePlan, SharedPreferencesUtil sharedPreferencesUtil) {
         //TODO:Add a recycleView
         planList.add(timePlan);
-//        MyRecycleViewAdapter.ViewHolder.tvPlanTitle.setText(timePlan.getTitle());
-//        MyRecycleViewAdapter.ViewHolder.tvPlanLocation.setText(timePlan.getLocation());
-//        MyRecycleViewAdapter.ViewHolder.tvPlanTitle.setText(timePlan.getContext());
-//        tvPlanTitle.setText(timePlan.getTitle());
-//        tvPlanlocation.setText(timePlan.getLocation());
-//        tvPlanContext.setText(timePlan.getContext());
+        sharedPreferencesUtil.setTimePlanListValue("timePlanList", planList);
+    }
+
+    public List<TimePlan> getPlanList() {
+        return planList;
     }
 }
 

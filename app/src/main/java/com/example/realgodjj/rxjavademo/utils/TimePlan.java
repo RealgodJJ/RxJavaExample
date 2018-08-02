@@ -2,15 +2,17 @@ package com.example.realgodjj.rxjavademo.utils;
 
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TimePlan{
-    private ImageView icon;
+//    private ImageView icon;
     private String title;
     private String location;
     private String context;
     private boolean isAllDay;
-    private Date dateTime;
+//    private Date dateTime;
 
     public TimePlan(String title, String location, String context, boolean isAllDay) {
         this.title = title;
@@ -21,7 +23,7 @@ public class TimePlan{
     }
 
     public TimePlan(ImageView icon, String title, String location, String context, boolean isAllDay) {
-        this.icon = icon;
+//        this.icon = icon;
         this.title = title;
         this.location = location;
         this.context = context;
@@ -29,13 +31,13 @@ public class TimePlan{
 //        this.dateTime = dateTime;
     }
 
-    public ImageView getIcon() {
-        return icon;
-    }
+//    public ImageView getIcon() {
+//        return icon;
+//    }
 
-    public void setIcon(ImageView icon) {
-        this.icon = icon;
-    }
+//    public void setIcon(ImageView icon) {
+//        this.icon = icon;
+//    }
 
     public String getTitle() {
         return title;
@@ -69,11 +71,11 @@ public class TimePlan{
         this.isAllDay = isAllDay;
     }
 
-    public Date getDateTime() {
-        return dateTime;
-    }
+//    public Date getDateTime() {
+//        return dateTime;
+//    }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
-    }
+//    public void setDateTime(Date dateTime) {
+//        this.dateTime = dateTime;
+//    }
 }

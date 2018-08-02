@@ -1,8 +1,18 @@
 package com.example.realgodjj.rxjavademo.ui;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,10 +28,13 @@ import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.ui.Fragment.FirstFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.SecondFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.ThirdFragment;
+import com.example.realgodjj.rxjavademo.utils.SharedPreferencesUtil;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
 import com.example.realgodjj.rxjavademo.widget.CommonPopupWindow;
+import com.example.realgodjj.rxjavademo.widget.Contants;
 import com.example.realgodjj.rxjavademo.widget.NoScrollViewPager;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -29,6 +42,9 @@ import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Toolbar toolbar;
+    //添加权限获取选项
+    private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private AlertDialog dialog;
     //    private PopupWindow topBarPopupWindow;
     private CommonPopupWindow commonPopupWindow;
     private NoScrollViewPager nsvpMain;
@@ -42,9 +58,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int PAGE_CLOCK = 0, PAGE_ALARM_CLOCK = 1, PAGE_TIMER = 2;
     private static boolean isQuit = false;
+
+    private SharedPreferencesUtil sharedPreferencesUtil;
+
     //onResult的码
     private static final int addActivityRequestCodeOfPage0 = 0, addActivityRequestCodeOfPage1 = 1,
-            addActivityRequestCodeOfPage2 = 2;
+            addActivityRequestCodeOfPage2 = 2, requestStoragePermission = 13;
     private Timer timer = new Timer();
 
     @Override
@@ -54,6 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initViews();
         setViewPagerEvent();
         initListeners();
+        addPermission();
     }
 
     @Override
@@ -92,12 +112,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         fragmentList = new ArrayList<Fragment>();
 //        fragments = new Fragment[]{new FirstFragment(), new SecondFragment()};
-
-
         fragmentList.add(new FirstFragment());
         fragmentList.add(new SecondFragment());
         fragmentList.add(new ThirdFragment());
         nsvpMain.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList));
+
+        sharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, Contants.CONFIG);
+        if (sharedPreferencesUtil.getBoolean(Contants.IS_FIRST_START)) {
+            //如果是第一次的安装
+            Boolean isFirstInstall = sharedPreferencesUtil.putBoolean(Contants.IS_FIRST_START, false);
+            if (!isFirstInstall)
+                toast(R.string.get_information_error);
+        } else {
+            SharedPreferencesUtil newSharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, Contants.CONFIG);
+            newSharedPreferencesUtil.getTimePlanListValue("timePlanList");
+        }
     }
 
     @Override
@@ -144,6 +173,62 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Log.e("ScrollStateChanged", "success");
             }
         });
+    }
+
+    private void addPermission() {
+        //如果在API23之后，则采用动态获取权限的方式
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //检查是否已经获取该权限
+            int i = ContextCompat.checkSelfPermission(this, permissions[0]);
+            //权限是否已经授权或拒绝
+            if (i != PackageManager.PERMISSION_GRANTED) {
+                showDialogTipUserRequestPermission();
+            }
+        }
+    }
+
+    //权限提示框
+    private void showDialogTipUserRequestPermission() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.tip_permission_title)
+                .setMessage(R.string.tip_permission)
+                .setPositiveButton(R.string.open_permission, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //提交请求权限
+                        ActivityCompat.requestPermissions(MainActivity.this, permissions, requestStoragePermission);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).setCancelable(false).show();
+    }
+
+    //使用手机原生系统设置权限
+    private void showDialogTipUserGoToAppSettting() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.tip_permission_title)
+                .setMessage(R.string.tip_permission_again)
+                .setPositiveButton(R.string.open_permission, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 跳转到应用权限设置界面
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivityForResult(intent, requestStoragePermission);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                }).setCancelable(false).show();
     }
 
     @Override
@@ -215,14 +300,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     })
                     .setOutsideTouchable(true)
                     .create();
+            commonPopupWindow.showAsDropDown(buttonMenu, -150, 24);
+            commonPopupWindow.update();
         } else if (nsvpMain.getCurrentItem() == 1) {
             toast(R.string.alarm_clock);
         } else {
             toast(R.string.timer);
         }
-
-        commonPopupWindow.showAsDropDown(buttonMenu, -150, 24);
-        commonPopupWindow.update();
     }
 
     private void setPageClock() {
@@ -266,7 +350,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         textClock.setTextColor(getResources().getColor(R.color.black));
         textAlarmClock.setTextColor(getResources().getColor(R.color.black));
     }
-    
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //处理存储空间的权限获取
+        if (requestCode == requestStoragePermission) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    //判断用户是否点击了不再提醒选项
+                    boolean isRequestAgain = shouldShowRequestPermissionRationale(permissions[0]);
+                    if (!isRequestAgain) {
+                        showDialogTipUserGoToAppSettting();
+                    } else {
+                        finish();
+                    }
+                } else {
+                    toast(R.string.get_permission_success);
+                }
+            }
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -277,17 +382,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String location = data.getStringExtra("location");
                 String context = data.getStringExtra("context");
                 Boolean isAllDay = data.getBooleanExtra("isAllDay", false);
-                Log.e("TAG", title);
-                Log.e("TAG", location);
-                Log.e("TAG", context);
+//                if (!(sharedPreferencesUtil.putString("title", title) &&
+//                        sharedPreferencesUtil.putString("location", location) &&
+//                        sharedPreferencesUtil.putString("context", context)) &&
+//                        sharedPreferencesUtil.putBoolean("isAllDay", isAllDay)) {
+//                    toast(R.string.add_plan_fail);
+//                    return;
+//                }
+                //将事件添加到TimePlan对象中，以便最终能够显示出来
+                //TODO：将事件添加到timePlanList数组中，以便数据能够保存起来
                 TimePlan timePlan = new TimePlan(title, location, context, isAllDay);
                 List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-                ((FirstFragment)fragmentList.get(0)).updataUI(timePlan);
+                ((FirstFragment) fragmentList.get(0)).updataUI(timePlan, sharedPreferencesUtil);
             }
         } else if (requestCode == addActivityRequestCodeOfPage1) {
             setPageAlarmClock();
         } else if (requestCode == addActivityRequestCodeOfPage2) {
             setPageTimer();
+        } else if (requestCode == requestStoragePermission) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                //检查是否已经获取该权限
+                int i = ContextCompat.checkSelfPermission(this, permissions[0]);
+                //权限是否已经授权或拒绝
+                if (i != PackageManager.PERMISSION_GRANTED) {
+                    //提示用户去应用设置界面直接手动开启权限
+                    showDialogTipUserGoToAppSettting();
+                } else {
+                    if (dialog != null && dialog.isShowing())
+                        dialog.dismiss();
+                    toast(R.string.get_permission_success);
+                }
+            }
         }
     }
 
@@ -297,8 +422,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (!isQuit) {
                 isQuit = true;
                 toast(R.string.key_again_exit);
-                TimerTask task;
-                task = new TimerTask() {
+                TimerTask task = new TimerTask() {
                     @Override
                     public void run() {
                         isQuit = false;
