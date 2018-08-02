@@ -22,6 +22,7 @@ import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.base.BaseSubscriber;
 import com.example.realgodjj.rxjavademo.utils.SharedPreferencesUtil;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
+import com.example.realgodjj.rxjavademo.widget.App;
 import com.example.realgodjj.rxjavademo.widget.TimeKeeperView;
 
 import org.reactivestreams.Subscription;
@@ -44,7 +45,7 @@ public class FirstFragment extends Fragment {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss,yyyy/MM/dd  E", Locale.getDefault());
     private RecyclerView myRecyclerView;
     private MyRecycleViewAdapter myRecycleViewAdapter;
-    private List<TimePlan> planList;
+//    private List<TimePlan> planList;
 
     //PlanList中的控件
 //    private TextView tvPlanTitle, tvPlanContext, tvPlanlocation;
@@ -69,8 +70,8 @@ public class FirstFragment extends Fragment {
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //初始化并设置适配器view
-        planList = new ArrayList<>();
-        myRecycleViewAdapter = new MyRecycleViewAdapter(planList);
+//        planList = new ArrayList<>();
+        myRecycleViewAdapter = new MyRecycleViewAdapter(App.planList);
         myRecyclerView.setAdapter(myRecycleViewAdapter);
     }
 
@@ -120,12 +121,12 @@ public class FirstFragment extends Fragment {
 
     public void updataUI(TimePlan timePlan, SharedPreferencesUtil sharedPreferencesUtil) {
         //TODO:Add a recycleView
-        planList.add(timePlan);
-        sharedPreferencesUtil.setTimePlanListValue("timePlanList", planList);
+        App.planList.add(timePlan);
+        sharedPreferencesUtil.setTimePlanListValue("timePlanList", App.planList);
     }
 
-    public List<TimePlan> getPlanList() {
-        return planList;
+    public void refreshUI(SharedPreferencesUtil sharedPreferencesUtil) {
+        App.planList = sharedPreferencesUtil.getTimePlanListValue("timePlanList");
     }
 }
 

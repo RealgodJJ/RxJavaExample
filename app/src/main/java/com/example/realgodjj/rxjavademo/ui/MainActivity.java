@@ -30,11 +30,12 @@ import com.example.realgodjj.rxjavademo.ui.Fragment.SecondFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.ThirdFragment;
 import com.example.realgodjj.rxjavademo.utils.SharedPreferencesUtil;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
+import com.example.realgodjj.rxjavademo.widget.App;
 import com.example.realgodjj.rxjavademo.widget.CommonPopupWindow;
-import com.example.realgodjj.rxjavademo.widget.Contants;
 import com.example.realgodjj.rxjavademo.widget.NoScrollViewPager;
+import com.google.gson.reflect.TypeToken;
 
-import java.sql.Time;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -49,7 +50,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private CommonPopupWindow commonPopupWindow;
     private NoScrollViewPager nsvpMain;
     private List<Fragment> fragmentList;
-    //    private Fragment[] fragments;
 
     private FrameLayout frameClock, frameAlarmClock, frameTimer;
     private ImageView buttonPageClock, buttonPageAlarmClock, buttonPageTimer;
@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int PAGE_CLOCK = 0, PAGE_ALARM_CLOCK = 1, PAGE_TIMER = 2;
     private static boolean isQuit = false;
 
-    private SharedPreferencesUtil sharedPreferencesUtil;
+//    private SharedPreferencesUtil sharedPreferencesUtil;
 
     //onResult的码
     private static final int addActivityRequestCodeOfPage0 = 0, addActivityRequestCodeOfPage1 = 1,
@@ -117,15 +117,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragmentList.add(new ThirdFragment());
         nsvpMain.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList));
 
-        sharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, Contants.CONFIG);
-        if (sharedPreferencesUtil.getBoolean(Contants.IS_FIRST_START)) {
+        App.sharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, App.CONFIG);
+        if (App.sharedPreferencesUtil.getBoolean(App.IS_FIRST_START)) {
             //如果是第一次的安装
-            Boolean isFirstInstall = sharedPreferencesUtil.putBoolean(Contants.IS_FIRST_START, false);
+            Boolean isFirstInstall = App.sharedPreferencesUtil.putBoolean(App.IS_FIRST_START, false);
             if (!isFirstInstall)
                 toast(R.string.get_information_error);
         } else {
-            SharedPreferencesUtil newSharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, Contants.CONFIG);
-            newSharedPreferencesUtil.getTimePlanListValue("timePlanList");
+//            SharedPreferencesUtil newSharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, App.CONFIG);
+//            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+//            ((FirstFragment) fragmentList.get(0)).refreshUI(newSharedPreferencesUtil);
         }
     }
 
@@ -392,8 +393,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 //将事件添加到TimePlan对象中，以便最终能够显示出来
                 //TODO：将事件添加到timePlanList数组中，以便数据能够保存起来
                 TimePlan timePlan = new TimePlan(title, location, context, isAllDay);
-                List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-                ((FirstFragment) fragmentList.get(0)).updataUI(timePlan, sharedPreferencesUtil);
+//                List<Fragment> fragmentList = this.getSupportFragmentManager().getFragments();
+                ((FirstFragment) fragmentList.get(0)).updataUI(timePlan, App.sharedPreferencesUtil);
             }
         } else if (requestCode == addActivityRequestCodeOfPage1) {
             setPageAlarmClock();

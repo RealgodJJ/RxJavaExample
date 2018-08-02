@@ -9,10 +9,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by MQ on 2017/5/3.
- */
-
 public class CommonUtil {
     /**
      * 测量View的宽高

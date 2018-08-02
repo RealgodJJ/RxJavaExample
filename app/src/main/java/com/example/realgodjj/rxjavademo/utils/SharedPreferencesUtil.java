@@ -95,11 +95,11 @@ public class SharedPreferencesUtil {
      * @param key
      * @param timePlanList 当前时间计划列表
      */
-    public <TimePlan> void setTimePlanListValue(String key, List<TimePlan> timePlanList) {
+    public <T> void setTimePlanListValue(String key, List<T> timePlanList) {
         if (null == timePlanList || timePlanList.size() <= 0)
             return;
         Gson gson = new Gson();
-        Type type = new TypeToken<List<TimePlan>>() {
+        Type type = new TypeToken<List<T>>() {
         }.getType();
         String timePlanJson = gson.toJson(timePlanList, type);
         editor.clear();
