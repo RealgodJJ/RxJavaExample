@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.realgodjj.rxjavademo.Adapter.MyFragmentPagerAdapter;
 import com.example.realgodjj.rxjavademo.R;
@@ -33,9 +34,7 @@ import com.example.realgodjj.rxjavademo.utils.TimePlan;
 import com.example.realgodjj.rxjavademo.widget.App;
 import com.example.realgodjj.rxjavademo.widget.CommonPopupWindow;
 import com.example.realgodjj.rxjavademo.widget.NoScrollViewPager;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -59,7 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final int PAGE_CLOCK = 0, PAGE_ALARM_CLOCK = 1, PAGE_TIMER = 2;
     private static boolean isQuit = false;
 
-//    private SharedPreferencesUtil sharedPreferencesUtil;
+    private SharedPreferencesUtil sharedPreferencesUtil;
 
     //onResult的码
     private static final int addActivityRequestCodeOfPage0 = 0, addActivityRequestCodeOfPage1 = 1,
@@ -74,11 +73,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setViewPagerEvent();
         initListeners();
         addPermission();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 
     @Override
@@ -117,17 +111,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragmentList.add(new ThirdFragment());
         nsvpMain.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList));
 
-        App.sharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, App.CONFIG);
-        if (App.sharedPreferencesUtil.getBoolean(App.IS_FIRST_START)) {
-            //如果是第一次的安装
-            Boolean isFirstInstall = App.sharedPreferencesUtil.putBoolean(App.IS_FIRST_START, false);
-            if (!isFirstInstall)
-                toast(R.string.get_information_error);
-        } else {
-//            SharedPreferencesUtil newSharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, App.CONFIG);
-//            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-//            ((FirstFragment) fragmentList.get(0)).refreshUI(newSharedPreferencesUtil);
-        }
+        sharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, App.CONFIG, App.timePlanList);
+        App.timePlanList = ((FirstFragment) fragmentList.get(0)).refreshUI(sharedPreferencesUtil);
     }
 
     @Override
@@ -210,7 +195,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     //使用手机原生系统设置权限
     private void showDialogTipUserGoToAppSettting() {
-        new AlertDialog.Builder(this)
+        dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.tip_permission_title)
                 .setMessage(R.string.tip_permission_again)
                 .setPositiveButton(R.string.open_permission, new DialogInterface.OnClickListener() {
@@ -383,18 +368,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String location = data.getStringExtra("location");
                 String context = data.getStringExtra("context");
                 Boolean isAllDay = data.getBooleanExtra("isAllDay", false);
-//                if (!(sharedPreferencesUtil.putString("title", title) &&
-//                        sharedPreferencesUtil.putString("location", location) &&
-//                        sharedPreferencesUtil.putString("context", context)) &&
-//                        sharedPreferencesUtil.putBoolean("isAllDay", isAllDay)) {
-//                    toast(R.string.add_plan_fail);
-//                    return;
-//                }
-                //将事件添加到TimePlan对象中，以便最终能够显示出来
-                //TODO：将事件添加到timePlanList数组中，以便数据能够保存起来
+
+                //事件添加到timePlanList数组中，以便数据能够保存起来，最终能够显示出来
                 TimePlan timePlan = new TimePlan(title, location, context, isAllDay);
 //                List<Fragment> fragmentList = this.getSupportFragmentManager().getFragments();
-                ((FirstFragment) fragmentList.get(0)).updataUI(timePlan, App.sharedPreferencesUtil);
+                ((FirstFragment) fragmentList.get(0)).updateUI(timePlan, sharedPreferencesUtil);
             }
         } else if (requestCode == addActivityRequestCodeOfPage1) {
             setPageAlarmClock();
@@ -438,4 +416,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 }
+
+//程序结束前标记已完成第一次安装
+//        if (sharedPreferencesUtil.getBoolean(App.IS_FIRST_START)) {
+//            //如果是第一次的安装
+//            Boolean isFirstInstall = sharedPreferencesUtil.putBoolean(App.IS_FIRST_START, false);
+//            if (!isFirstInstall)
+//                toast(R.string.get_information_error);
+//        } else {
+//
+//            Toast.makeText(this, "不是第一次安装！！", Toast.LENGTH_SHORT).show();
+//        }
 

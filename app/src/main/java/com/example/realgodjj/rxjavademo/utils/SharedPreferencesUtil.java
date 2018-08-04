@@ -9,19 +9,22 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SharedPreferencesUtil {
     private SharedPreferences sharedPreferences;
     private Context context;
     private SharedPreferences.Editor editor;
+    private List<TimePlan> timePlanList;
     private String fileName = "";
     private int mode = 0;
 //    private static final String TAG = SharedPreferencesUtil.class.getSimpleName();
 
     @SuppressLint({"WrongConstant", "CommitPrefEdits"})
-    public SharedPreferencesUtil(Context context, String fileName) {
+    public SharedPreferencesUtil(Context context, String fileName, List<TimePlan> timePlanList) {
         this.context = context;
+        this.timePlanList = timePlanList;
         sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_APPEND);
         this.editor = sharedPreferences.edit();
         this.fileName = fileName;
@@ -107,15 +110,26 @@ public class SharedPreferencesUtil {
         editor.commit();
     }
 
-    public <T> List<T> getTimePlanListValue(String key) {
+    public <T> List<T> getTimePlanListValue(String key, Class<T[]> clazz) {
         List<T> timePlanList = new ArrayList<T>();
         String timePlanJson = sharedPreferences.getString(key, null);
         if (timePlanJson == null) {
             return timePlanList;
         }
-        Gson gson = new Gson();
-        timePlanList = gson.fromJson(timePlanJson, new TypeToken<List<T>>() {
-        }.getType());
-        return timePlanList;
+        T[] arr = new Gson().fromJson(timePlanJson, clazz);
+        //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
+        return new ArrayList(Arrays.asList(arr));
     }
+
+//    public <T> List<T> getTimePlanListValue(String key) {
+//        List<T> timePlanList = new ArrayList<T>();
+//        String timePlanJson = sharedPreferences.getString(key, null);
+//        if (timePlanJson == null) {
+//            return timePlanList;
+//        }
+//        Gson gson = new Gson();
+//        timePlanList = gson.fromJson(timePlanJson, new TypeToken<List<T>>() {
+//        }.getType());
+//        return timePlanList;
+//    }
 }

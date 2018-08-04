@@ -29,6 +29,7 @@ import org.reactivestreams.Subscription;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -45,7 +46,6 @@ public class FirstFragment extends Fragment {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss,yyyy/MM/dd  E", Locale.getDefault());
     private RecyclerView myRecyclerView;
     private MyRecycleViewAdapter myRecycleViewAdapter;
-//    private List<TimePlan> planList;
 
     //PlanList中的控件
 //    private TextView tvPlanTitle, tvPlanContext, tvPlanlocation;
@@ -70,8 +70,7 @@ public class FirstFragment extends Fragment {
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //初始化并设置适配器view
-//        planList = new ArrayList<>();
-        myRecycleViewAdapter = new MyRecycleViewAdapter(App.planList);
+        myRecycleViewAdapter = new MyRecycleViewAdapter(App.timePlanList);
         myRecyclerView.setAdapter(myRecycleViewAdapter);
     }
 
@@ -119,14 +118,14 @@ public class FirstFragment extends Fragment {
         tvTimeShow.setText(spannable);
     }
 
-    public void updataUI(TimePlan timePlan, SharedPreferencesUtil sharedPreferencesUtil) {
-        //TODO:Add a recycleView
-        App.planList.add(timePlan);
-        sharedPreferencesUtil.setTimePlanListValue("timePlanList", App.planList);
+    public void updateUI(TimePlan timePlan, SharedPreferencesUtil sharedPreferencesUtil) {
+        //TODO：Have some problem
+        App.timePlanList.add(timePlan);
+        sharedPreferencesUtil.setTimePlanListValue("timePlanList", App.timePlanList);
     }
 
-    public void refreshUI(SharedPreferencesUtil sharedPreferencesUtil) {
-        App.planList = sharedPreferencesUtil.getTimePlanListValue("timePlanList");
+    public List<TimePlan> refreshUI(SharedPreferencesUtil sharedPreferencesUtil) {
+        return sharedPreferencesUtil.getTimePlanListValue("timePlanList", TimePlan[].class);
     }
 }
 
