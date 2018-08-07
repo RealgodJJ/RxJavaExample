@@ -162,7 +162,9 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         nowTime = simpleDateFormat.format(calendar.getTime());
         etStartTime.setText(nowTime);
         etEndTime.setText(nowTime);
+    }
 
+    private void setStartTime() {
         customDatePicker1 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
 
             @Override
@@ -172,7 +174,10 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         }, "2010-01-01 00:00", "2050-12-31 23:59");
         customDatePicker1.showSpecificTime(true);
         customDatePicker1.setIsLoop(false);
+        customDatePicker1.show(etStartTime.getText().toString());
+    }
 
+    private void setEndTime() {
         customDatePicker2 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
 
             @Override
@@ -182,31 +187,6 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         }, "2010-01-01 00:00", "2050-12-31 23:59");
         customDatePicker2.showSpecificTime(true);
         customDatePicker2.setIsLoop(false);
-    }
-
-    private void setStartTime() {
-//        customDatePicker1 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
-//
-//            @Override
-//            public void handle(String time) {
-//                etStartTime.setText(time);
-//            }
-//        }, nowTime, nowTime);
-//        customDatePicker1.showSpecificTime(true);
-//        customDatePicker1.setIsLoop(true);
-        customDatePicker1.show(etStartTime.getText().toString());
-    }
-
-    private void setEndTime() {
-//        customDatePicker2 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
-//
-//            @Override
-//            public void handle(String time) {
-//                etEndTime.setText(time);
-//            }
-//        }, nowTime, nowTime);
-//        customDatePicker2.showSpecificTime(true);
-//        customDatePicker2.setIsLoop(true);
         customDatePicker2.show(etEndTime.getText().toString());
     }
 }

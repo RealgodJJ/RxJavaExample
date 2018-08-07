@@ -296,7 +296,7 @@ public class CustomDatePicker {
             @Override
             public void onSelect(String text) {
                 selectedCalender.set(Calendar.YEAR, Integer.parseInt(text));
-//                monthChange();
+                monthChange();
             }
         });
 
@@ -305,7 +305,7 @@ public class CustomDatePicker {
             public void onSelect(String text) {
                 selectedCalender.set(Calendar.DAY_OF_MONTH, 1);
                 selectedCalender.set(Calendar.MONTH, Integer.parseInt(text) - 1);
-//                dayChange();
+                dayChange();
             }
         });
 
@@ -313,7 +313,7 @@ public class CustomDatePicker {
             @Override
             public void onSelect(String text) {
                 selectedCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(text));
-//                hourChange();
+                hourChange();
             }
         });
 
@@ -321,7 +321,7 @@ public class CustomDatePicker {
             @Override
             public void onSelect(String text) {
                 selectedCalender.set(Calendar.HOUR_OF_DAY, Integer.parseInt(text));
-//                minuteChange();
+                minuteChange();
             }
         });
 
@@ -331,6 +331,43 @@ public class CustomDatePicker {
                 selectedCalender.set(Calendar.MINUTE, Integer.parseInt(text));
             }
         });
+    }
+
+    private void monthChange() {
+        executeAnimator(month_pv);
+        month_pv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dayChange();
+            }
+        }, 100);
+    }
+
+    private void dayChange() {
+        executeAnimator(day_pv);
+        day_pv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hourChange();
+            }
+        }, 100);
+    }
+
+    private void hourChange() {
+        if ((scrollUnits & SCROLL_TYPE.HOUR.value) == SCROLL_TYPE.HOUR.value)
+            executeAnimator(hour_pv);
+        hour_pv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                minuteChange();
+            }
+        }, 100);
+    }
+
+    private void minuteChange() {
+        if ((scrollUnits & SCROLL_TYPE.MINUTE.value) == SCROLL_TYPE.MINUTE.value)
+            executeAnimator(minute_pv);
+        executeScroll();
     }
 
     private void executeAnimator(View view) {
@@ -349,7 +386,7 @@ public class CustomDatePicker {
         minute_pv.setCanScroll(minute.size() > 1 && (scrollUnits & SCROLL_TYPE.MINUTE.value) == SCROLL_TYPE.MINUTE.value);
     }
 
-    private int disScrollUnit(SCROLL_TYPE... scroll_types) {
+    private void disScrollUnit(SCROLL_TYPE... scroll_types) {
         if (scroll_types == null || scroll_types.length == 0) {
             scrollUnits = SCROLL_TYPE.HOUR.value + SCROLL_TYPE.MINUTE.value;
         } else {
@@ -357,7 +394,6 @@ public class CustomDatePicker {
                 scrollUnits ^= scroll_type.value;
             }
         }
-        return scrollUnits;
     }
 
     public void show(String time) {
@@ -531,125 +567,4 @@ public class CustomDatePicker {
         }
         return convertSuccess;
     }
-
-    private void monthChange() {
-        month.clear();
-        int selectedYear = selectedCalender.get(Calendar.YEAR);
-        if (selectedYear == startYear) {
-            for (int i = startMonth; i <= MAX_MONTH; i++) {
-                month.add(formatTimeUnit(i));
-            }
-        } else if (selectedYear == endYear) {
-            for (int i = 1; i <= endMonth; i++) {
-                month.add(formatTimeUnit(i));
-            }
-        } else {
-            for (int i = 1; i <= MAX_MONTH; i++) {
-                month.add(formatTimeUnit(i));
-            }
-        }
-        selectedCalender.set(Calendar.MONTH, Integer.parseInt(month.get(0)) - 1);
-        month_pv.setData(month);
-        month_pv.setSelected(0);
-        executeAnimator(month_pv);
-
-        month_pv.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dayChange();
-            }
-        }, 100);
-    }
-
-    private void dayChange() {
-        day.clear();
-        int selectedYear = selectedCalender.get(Calendar.YEAR);
-        int selectedMonth = selectedCalender.get(Calendar.MONTH) + 1;
-        if (selectedYear == startYear && selectedMonth == startMonth) {
-            for (int i = startDay; i <= selectedCalender.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-                day.add(formatTimeUnit(i));
-            }
-        } else if (selectedYear == endYear && selectedMonth == endMonth) {
-            for (int i = 1; i <= endDay; i++) {
-                day.add(formatTimeUnit(i));
-            }
-        } else {
-            for (int i = 1; i <= selectedCalender.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-                day.add(formatTimeUnit(i));
-            }
-        }
-        selectedCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day.get(0)));
-        day_pv.setData(day);
-        day_pv.setSelected(0);
-        executeAnimator(day_pv);
-
-        day_pv.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hourChange();
-            }
-        }, 100);
-    }
-
-    private void hourChange() {
-        if ((scrollUnits & SCROLL_TYPE.HOUR.value) == SCROLL_TYPE.HOUR.value) {
-            hour.clear();
-            int selectedYear = selectedCalender.get(Calendar.YEAR);
-            int selectedMonth = selectedCalender.get(Calendar.MONTH) + 1;
-            int selectedDay = selectedCalender.get(Calendar.DAY_OF_MONTH);
-            if (selectedYear == startYear && selectedMonth == startMonth && selectedDay == startDay) {
-                for (int i = startHour; i <= MAX_HOUR; i++) {
-                    hour.add(formatTimeUnit(i));
-                }
-            } else if (selectedYear == endYear && selectedMonth == endMonth && selectedDay == endDay) {
-                for (int i = MIN_HOUR; i <= endHour; i++) {
-                    hour.add(formatTimeUnit(i));
-                }
-            } else {
-                for (int i = MIN_HOUR; i <= MAX_HOUR; i++) {
-                    hour.add(formatTimeUnit(i));
-                }
-            }
-            selectedCalender.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour.get(0)));
-            hour_pv.setData(hour);
-            hour_pv.setSelected(0);
-            executeAnimator(hour_pv);
-        }
-
-        hour_pv.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                minuteChange();
-            }
-        }, 100);
-    }
-
-    private void minuteChange() {
-        if ((scrollUnits & SCROLL_TYPE.MINUTE.value) == SCROLL_TYPE.MINUTE.value) {
-            minute.clear();
-            int selectedYear = selectedCalender.get(Calendar.YEAR);
-            int selectedMonth = selectedCalender.get(Calendar.MONTH) + 1;
-            int selectedDay = selectedCalender.get(Calendar.DAY_OF_MONTH);
-            int selectedHour = selectedCalender.get(Calendar.HOUR_OF_DAY);
-            if (selectedYear == startYear && selectedMonth == startMonth && selectedDay == startDay && selectedHour == startHour) {
-                for (int i = startMinute; i <= MAX_MINUTE; i++) {
-                    minute.add(formatTimeUnit(i));
-                }
-            } else if (selectedYear == endYear && selectedMonth == endMonth && selectedDay == endDay && selectedHour == endHour) {
-                for (int i = MIN_MINUTE; i <= endMinute; i++) {
-                    minute.add(formatTimeUnit(i));
-                }
-            } else {
-                for (int i = MIN_MINUTE; i <= MAX_MINUTE; i++) {
-                    minute.add(formatTimeUnit(i));
-                }
-            }
-            selectedCalender.set(Calendar.MINUTE, Integer.parseInt(minute.get(0)));
-            minute_pv.setData(minute);
-            minute_pv.setSelected(0);
-            executeAnimator(minute_pv);
-        }
-        executeScroll();
-    }
-
 }
