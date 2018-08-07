@@ -20,4 +20,10 @@
     <color name="grey">#dfdfdf</color>
     <color name="red">#ffff0000</color>
     <color name="green">#ff0BE3CD</color>
+    <color name="first_fragment_background">#a5fdd3</color>
+    <color name="time_plan_item_background">#ffedcb</color>
+    <color name="date_title">#59B29C</color>
+    <color name="date_choose">#333333</color>
+    <color name="split_line">#11112233</color>
+    <color name="shadow_red">#fd6565</color>
 </resources>

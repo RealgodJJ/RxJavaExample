@@ -11,16 +11,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.realgodjj.rxjavademo.R;
+import com.example.realgodjj.rxjavademo.widget.CustomDatePicker;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import ch.ielse.view.SwitchView;
 
 public class AddTimePlanActivity extends BaseActivity implements View.OnClickListener {
     private Toolbar toolbar;
-    private Button btCancel, btSave, btMore;
+    private Button btCancel, btSave, btStartTime, btEndTime, btMore;
     private ImageView ivLocation, ivAllDay;
     private LinearLayout llStart, llEnd, llReminder;
-    private EditText etTitle, etLocation, etAllDay, etContext;
+    private EditText etTitle, etLocation, etAllDay, etStartTime, etEndTime, etContext;
+    private CustomDatePicker customDatePicker1, customDatePicker2;
     private SwitchView switchView;
+    private String nowTime;
 
     @Override
     public void setContentView() {
@@ -28,6 +35,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.activity_add_time_plan);
         initViews();
         initListeners();
+        initDatePicker();
     }
 
     @Override
@@ -38,6 +46,8 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
 
         btCancel = findViewById(R.id.bt_cancel_plan);
         btSave = findViewById(R.id.bt_add_plan);
+        btStartTime = findViewById(R.id.bt_start_time);
+        btEndTime = findViewById(R.id.bt_end_time);
         btMore = findViewById(R.id.bt_more);
 
         ivLocation = findViewById(R.id.iv_location);
@@ -46,6 +56,8 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         etTitle = findViewById(R.id.et_plan_title);
         etLocation = findViewById(R.id.et_location);
         etAllDay = findViewById(R.id.et_all_day);
+        etStartTime = findViewById(R.id.et_start);
+        etEndTime = findViewById(R.id.et_end);
         etContext = findViewById(R.id.et_context);
 
         switchView = findViewById(R.id.sv_all_day);
@@ -72,24 +84,6 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
 
             }
         });
-
-        switchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isOpened = switchView.isOpened();
-                if (isOpened) {
-                    ivAllDay.setImageResource(R.drawable.all_day_light);
-                    etAllDay.setText(R.string.all_day);
-                    llStart.setVisibility(View.GONE);
-                    llEnd.setVisibility(View.GONE);
-                } else {
-                    ivAllDay.setImageResource(R.drawable.all_day_dark);
-                    etAllDay.setText(R.string.not_all_day);
-                    llStart.setVisibility(View.VISIBLE);
-                    llEnd.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     @Override
@@ -97,7 +91,10 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         super.initListeners();
         btCancel.setOnClickListener(this);
         btSave.setOnClickListener(this);
+        btStartTime.setOnClickListener(this);
+        btEndTime.setOnClickListener(this);
         btMore.setOnClickListener(this);
+        switchView.setOnClickListener(this);
     }
 
     @Override
@@ -107,6 +104,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
             case R.id.bt_cancel_plan:
                 finish();
                 break;
+
             case R.id.bt_add_plan:
                 if (etTitle.getText().toString().equals(""))
                     toast(R.string.null_title);
@@ -125,10 +123,90 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                     toast(R.string.add_plan_success);
                 }
                 break;
+
+            case R.id.bt_start_time:
+                //TODO
+                setStartTime();
+                break;
+
+            case R.id.bt_end_time:
+                //TODO
+                setEndTime();
+                break;
+
             case R.id.bt_more:
                 llReminder.setVisibility(View.VISIBLE);
                 btMore.setVisibility(View.GONE);
                 break;
+
+            case R.id.sv_all_day:
+                boolean isOpened = switchView.isOpened();
+                if (isOpened) {
+                    ivAllDay.setImageResource(R.drawable.all_day_light);
+                    etAllDay.setText(R.string.all_day);
+                    llStart.setVisibility(View.GONE);
+                    llEnd.setVisibility(View.GONE);
+                } else {
+                    ivAllDay.setImageResource(R.drawable.all_day_dark);
+                    etAllDay.setText(R.string.not_all_day);
+                    llStart.setVisibility(View.VISIBLE);
+                    llEnd.setVisibility(View.VISIBLE);
+                }
+                break;
         }
+    }
+
+    private void initDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        nowTime = simpleDateFormat.format(calendar.getTime());
+        etStartTime.setText(nowTime);
+        etEndTime.setText(nowTime);
+
+        customDatePicker1 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
+
+            @Override
+            public void handle(String time) {
+                etStartTime.setText(time);
+            }
+        }, "2010-01-01 00:00", "2050-12-31 23:59");
+        customDatePicker1.showSpecificTime(true);
+        customDatePicker1.setIsLoop(false);
+
+        customDatePicker2 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
+
+            @Override
+            public void handle(String time) {
+                etEndTime.setText(time);
+            }
+        }, "2010-01-01 00:00", "2050-12-31 23:59");
+        customDatePicker2.showSpecificTime(true);
+        customDatePicker2.setIsLoop(false);
+    }
+
+    private void setStartTime() {
+//        customDatePicker1 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
+//
+//            @Override
+//            public void handle(String time) {
+//                etStartTime.setText(time);
+//            }
+//        }, nowTime, nowTime);
+//        customDatePicker1.showSpecificTime(true);
+//        customDatePicker1.setIsLoop(true);
+        customDatePicker1.show(etStartTime.getText().toString());
+    }
+
+    private void setEndTime() {
+//        customDatePicker2 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
+//
+//            @Override
+//            public void handle(String time) {
+//                etEndTime.setText(time);
+//            }
+//        }, nowTime, nowTime);
+//        customDatePicker2.showSpecificTime(true);
+//        customDatePicker2.setIsLoop(true);
+        customDatePicker2.show(etEndTime.getText().toString());
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.realgodjj.rxjavademo.R;
@@ -34,6 +35,7 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
         holder.tvPlanTitle.setText(timePlanList.get(position).getTitle());
         holder.tvPlanLocation.setText(timePlanList.get(position).getLocation());
         holder.tvPlanContext.setText(timePlanList.get(position).getContext());
+        holder.ivIsAllDay.setImageResource(timePlanList.get(position).isAllDay() ? R.drawable.all_day_light : R.drawable.all_day_dark);
     }
 
     @Override
@@ -46,12 +48,14 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
         TextView tvPlanTitle;
         TextView tvPlanContext;
         TextView tvPlanLocation;
+        ImageView ivIsAllDay;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvPlanTitle = itemView.findViewById(R.id.tv_list_title);
             tvPlanLocation = itemView.findViewById(R.id.tv_list_time_location);
             tvPlanContext = itemView.findViewById(R.id.tv_list_context);
+            ivIsAllDay = itemView.findViewById(R.id.iv_list_is_all_day);
         }
     }
 }

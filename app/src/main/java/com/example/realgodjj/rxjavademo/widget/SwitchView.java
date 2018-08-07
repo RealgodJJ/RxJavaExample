@@ -22,9 +22,6 @@ import android.view.animation.AccelerateInterpolator;
 
 import com.example.realgodjj.rxjavademo.R;
 
-/**
- * hei hei hei
- */
 public class SwitchView extends View {
 
     private static final int STATE_SWITCH_ON = 4;

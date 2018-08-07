@@ -12,14 +12,14 @@ public class TimePlan{
     private String location;
     private String context;
     private boolean isAllDay;
-//    private Date dateTime;
+    private Date dateTime;
 
     public TimePlan(String title, String location, String context, boolean isAllDay) {
         this.title = title;
         this.location = location;
         this.context = context;
         this.isAllDay = isAllDay;
-//        this.dateTime = dateTime;
+        this.dateTime = dateTime;
     }
 
     public TimePlan(ImageView icon, String title, String location, String context, boolean isAllDay) {
@@ -71,11 +71,11 @@ public class TimePlan{
         this.isAllDay = isAllDay;
     }
 
-//    public Date getDateTime() {
-//        return dateTime;
-//    }
+    public Date getDateTime() {
+        return dateTime;
+    }
 
-//    public void setDateTime(Date dateTime) {
-//        this.dateTime = dateTime;
-//    }
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
+    }
 }

@@ -5,7 +5,7 @@
     android:layout_height="80dp"
     android:layout_marginEnd="5dp"
     android:layout_marginStart="5dp"
-    android:background="@color/white"
+    android:background="@color/time_plan_item_background"
     android:orientation="horizontal">
 
     <ImageView
@@ -44,7 +44,7 @@
 
     <TextView
         android:id="@+id/tv_list_context"
-        android:layout_width="match_parent"
+        android:layout_width="230dp"
         android:layout_height="40dp"
         android:layout_below="@id/tv_list_title"
         android:layout_marginStart="5dp"
@@ -57,5 +57,17 @@
         android:singleLine="true"
         android:textSize="15sp"
         tools:text="@string/add_plan_context" />
+
+    <ImageView
+        android:id="@+id/iv_list_is_all_day"
+        android:layout_below="@id/tv_list_time_location"
+        android:layout_marginTop="5dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_toEndOf="@id/tv_list_context"
+        android:gravity="center"
+        android:scaleType="centerInside"
+        tools:background="@drawable/add_suceess"
+        tools:ignore="ContentDescription" />
 
 </RelativeLayout>

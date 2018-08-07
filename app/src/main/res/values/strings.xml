@@ -25,6 +25,21 @@
     <string name="add_plan_fail">添加事件失败</string>
     <string name="get_information_error">获取信息错误</string>
 
+    <!-- 日期滚动选项栏 -->
+    <string name="cancle">取消</string>
+    <string name="time_choose_title">请选择时间</string>
+    <string name="commit">确定</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+
+    <string name="select_date">选择日期</string>
+    <string name="current_date">当前日期</string>
+    <string name="select_time">选择时间</string>
+    <string name="current_time">当前时间</string>
+
     <!-- 添加时间计划页面 -->
     <string name="add_plan_success">添加计划成功！</string>
     <string name="title">标题</string>

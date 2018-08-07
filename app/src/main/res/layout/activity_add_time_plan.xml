@@ -84,11 +84,31 @@
             android:src="@drawable/start"
             tools:ignore="ContentDescription" />
 
-        <EditText
-            android:id="@+id/et_start"
-            style="@style/et_style"
-            android:hint="@string/start"
-            tools:ignore="TextFields" />
+        <FrameLayout
+            style="@style/screen_margin"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp">
+
+            <EditText
+                android:id="@+id/et_start"
+                style="@style/et_style"
+                android:enabled="false"
+                android:hint="@string/start"
+                android:textColor="@color/black"
+                tools:ignore="TextFields" />
+
+            <Button
+                android:id="@+id/bt_start_time"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="46dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/src_edit_time_button"
+                android:text="@string/edit"
+                android:textColor="@color/white" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -107,17 +127,35 @@
             android:src="@drawable/end"
             tools:ignore="ContentDescription" />
 
-        <EditText
-            android:id="@+id/et_end"
-            style="@style/et_style"
-            android:hint="@string/end"
-            tools:ignore="TextFields" />
+        <FrameLayout
+            style="@style/screen_margin"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp">
+
+            <EditText
+                android:id="@+id/et_end"
+                style="@style/et_style"
+                android:enabled="false"
+                android:hint="@string/end"
+                android:textColor="@color/black"
+                tools:ignore="TextFields" />
+
+            <Button
+                android:id="@+id/bt_end_time"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="46dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/src_edit_time_button"
+                android:text="@string/edit"
+                android:textColor="@color/white" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/screen_margin"
-        android:layout_height="wrap_content">
+    <LinearLayout style="@style/screen_margin">
 
         <ImageView
             android:id="@+id/iv_context"
@@ -137,7 +175,6 @@
     <LinearLayout
         android:id="@+id/ll_reminder"
         style="@style/screen_margin"
-        android:layout_height="wrap_content"
         android:visibility="gone">
 
         <ImageView
@@ -148,8 +185,7 @@
 
         <EditText
             android:id="@+id/et_reminder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/et_style"
             android:hint="@string/reminder"
             tools:ignore="TextFields" />
 
