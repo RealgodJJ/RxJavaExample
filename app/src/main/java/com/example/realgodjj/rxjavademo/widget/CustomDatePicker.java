@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.realgodjj.rxjavademo.R;
+import com.example.realgodjj.rxjavademo.ui.AddTimePlanActivity;
+import com.example.realgodjj.rxjavademo.ui.BaseActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,7 +23,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-public class CustomDatePicker {
+public class CustomDatePicker implements View.OnClickListener {
 
     /**
      * 定义结果回调接口
@@ -59,6 +62,7 @@ public class CustomDatePicker {
     private boolean spanYear, spanMon, spanDay, spanHour, spanMin;
     private Calendar selectedCalender, startCalendar, endCalendar;
     private TextView tv_cancel, tv_select, hour_text, minute_text;
+//    private String startYearS, startMonthS, startDayS, startHourS, startMinuteS, endYearS, endMonthS, endDayS, endHourS, endMinuteS;
 
     public CustomDatePicker(Context context, ResultHandler resultHandler, String startDate, String endDate) {
         if (isValidDate(startDate, "yyyy-MM-dd HH:mm") && isValidDate(endDate, "yyyy-MM-dd HH:mm")) {
@@ -77,6 +81,7 @@ public class CustomDatePicker {
             }
             initDialog();
             initView();
+            initListener();
         }
     }
 
@@ -105,26 +110,39 @@ public class CustomDatePicker {
         day_pv = datePickerDialog.findViewById(R.id.day_pv);
         hour_pv = datePickerDialog.findViewById(R.id.hour_pv);
         minute_pv = datePickerDialog.findViewById(R.id.minute_pv);
-        tv_cancel = datePickerDialog.findViewById(R.id.tv_cancle);
+        tv_cancel = datePickerDialog.findViewById(R.id.tv_cancel);
         tv_select = datePickerDialog.findViewById(R.id.tv_select);
         hour_text = datePickerDialog.findViewById(R.id.hour_text);
         minute_text = datePickerDialog.findViewById(R.id.minute_text);
+    }
 
-        tv_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.dismiss();
-            }
-        });
+    private void initListener() {
+        tv_cancel.setOnClickListener(this);
+        tv_select.setOnClickListener(this);
+    }
 
-        tv_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
-                handler.handle(sdf.format(selectedCalender.getTime()));
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_cancel:
                 datePickerDialog.dismiss();
-            }
-        });
+                break;
+            case R.id.tv_select:
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+                String dateTime = simpleDateFormat.format(selectedCalender.getTime());
+                //Get begin and end time to judge
+                if (App.isBeginTime) {
+                    AddTimePlanActivity.setStartDateTime(selectedCalender);
+                } else {
+                    AddTimePlanActivity.setEndDateTime(selectedCalender);
+                }
+                if (AddTimePlanActivity.getStartDateTime().getTime().getTime() > AddTimePlanActivity.getEndDateTime().getTime().getTime()) {
+                    AddTimePlanActivity.setIsValidEndDate(false);
+                }
+                handler.handle(dateTime);
+                datePickerDialog.dismiss();
+                break;
+        }
     }
 
     private void initParameter() {
@@ -450,7 +468,7 @@ public class CustomDatePicker {
     /**
      * 设置日期控件默认选中的时间
      */
-    public void setSelectedTime(String time) {
+    private void setSelectedTime(String time) {
         if (canAccess) {
             String[] str = time.split(" ");
             String[] dateStr = str[0].split("-");

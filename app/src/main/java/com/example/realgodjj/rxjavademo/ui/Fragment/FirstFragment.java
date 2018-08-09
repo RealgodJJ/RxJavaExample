@@ -74,7 +74,6 @@ public class FirstFragment extends Fragment {
         myRecyclerView.setAdapter(myRecycleViewAdapter);
     }
 
-    @SuppressLint("CheckResult")
     private void makeTime() {
         Flowable.interval(0, 1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -119,7 +118,6 @@ public class FirstFragment extends Fragment {
     }
 
     public void updateUI(TimePlan timePlan, SharedPreferencesUtil sharedPreferencesUtil) {
-        //TODO：Have some problem
         App.timePlanList.add(timePlan);
         sharedPreferencesUtil.setTimePlanListValue("timePlanList", App.timePlanList);
     }

@@ -12,23 +12,23 @@ public class TimePlan{
     private String location;
     private String context;
     private boolean isAllDay;
-    private Date dateTime;
+    private Date startDateTime = null, endDateTime = null;
 
     public TimePlan(String title, String location, String context, boolean isAllDay) {
         this.title = title;
         this.location = location;
         this.context = context;
         this.isAllDay = isAllDay;
-        this.dateTime = dateTime;
     }
 
-    public TimePlan(ImageView icon, String title, String location, String context, boolean isAllDay) {
+    public TimePlan(ImageView icon, String title, String location, String context, boolean isAllDay, Date startDateTime, Date endDateTime) {
 //        this.icon = icon;
         this.title = title;
         this.location = location;
         this.context = context;
         this.isAllDay = isAllDay;
-//        this.dateTime = dateTime;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
     }
 
 //    public ImageView getIcon() {
@@ -71,11 +71,19 @@ public class TimePlan{
         this.isAllDay = isAllDay;
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public Date getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setStartDateTime(Date startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public Date getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(Date endDateTime) {
+        this.endDateTime = endDateTime;
     }
 }
