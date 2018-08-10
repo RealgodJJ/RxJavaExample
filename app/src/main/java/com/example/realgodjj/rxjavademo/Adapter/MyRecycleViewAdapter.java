@@ -6,14 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.realgodjj.rxjavademo.R;
-import com.example.realgodjj.rxjavademo.utils.SharedPreferencesUtil;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdapter.ViewHolder> {
     private List<TimePlan> timePlanList;
@@ -33,9 +33,13 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
     @Override
     public void onBindViewHolder(@NonNull MyRecycleViewAdapter.ViewHolder holder, int position) {
         holder.tvPlanTitle.setText(timePlanList.get(position).getTitle());
-        holder.tvPlanLocation.setText(timePlanList.get(position).getLocation());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        String allDay = "全天";
+        holder.tvPlanTime.setText(timePlanList.get(position).isAllDay() ? allDay :
+                simpleDateFormat.format(timePlanList.get(position).getStartDateTime()) + "\n"
+                + simpleDateFormat.format(timePlanList.get(position).getEndDateTime()));
         holder.tvPlanContext.setText(timePlanList.get(position).getContext());
-        holder.ivIsAllDay.setImageResource(timePlanList.get(position).isAllDay() ? R.drawable.all_day_light : R.drawable.all_day_dark);
+        holder.tvPlanLocation.setText(timePlanList.get(position).getLocation());
     }
 
     @Override
@@ -47,15 +51,15 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
         @SuppressLint("StaticFieldLeak")
         TextView tvPlanTitle;
         TextView tvPlanContext;
+        TextView tvPlanTime;
         TextView tvPlanLocation;
-        ImageView ivIsAllDay;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvPlanTitle = itemView.findViewById(R.id.tv_list_title);
-            tvPlanLocation = itemView.findViewById(R.id.tv_list_time_location);
+            tvPlanTime = itemView.findViewById(R.id.tv_list_time);
             tvPlanContext = itemView.findViewById(R.id.tv_list_context);
-            ivIsAllDay = itemView.findViewById(R.id.iv_list_is_all_day);
+            tvPlanLocation = itemView.findViewById(R.id.tv_list_location);
         }
     }
 }

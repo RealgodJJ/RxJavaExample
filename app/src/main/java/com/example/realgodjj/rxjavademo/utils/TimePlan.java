@@ -21,7 +21,7 @@ public class TimePlan{
         this.isAllDay = isAllDay;
     }
 
-    public TimePlan(ImageView icon, String title, String location, String context, boolean isAllDay, Date startDateTime, Date endDateTime) {
+    public TimePlan(String title, String location, String context, boolean isAllDay, Date startDateTime, Date endDateTime) {
 //        this.icon = icon;
         this.title = title;
         this.location = location;

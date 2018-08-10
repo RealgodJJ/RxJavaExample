@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/tv_list_title"
-        android:layout_width="170dp"
+        android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@id/iv_list_icon"
@@ -26,12 +26,12 @@
         tools:text="@string/add_plan_title" />
 
     <TextView
-        android:id="@+id/tv_list_time_location"
+        android:id="@+id/tv_list_time"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_toEndOf="@id/tv_list_title"
         android:gravity="center"
-        tools:text="@string/add_plan_time_location" />
+        tools:text="@string/add_plan_time" />
 
     <View
         android:id="@+id/v_split"
@@ -44,7 +44,7 @@
 
     <TextView
         android:id="@+id/tv_list_context"
-        android:layout_width="230dp"
+        android:layout_width="220dp"
         android:layout_height="40dp"
         android:layout_below="@id/tv_list_title"
         android:layout_marginStart="5dp"
@@ -58,16 +58,12 @@
         android:textSize="15sp"
         tools:text="@string/add_plan_context" />
 
-    <ImageView
-        android:id="@+id/iv_list_is_all_day"
-        android:layout_below="@id/tv_list_time_location"
-        android:layout_marginTop="5dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+    <TextView
+        android:id="@+id/tv_list_location"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/tv_list_time"
         android:layout_toEndOf="@id/tv_list_context"
-        android:gravity="center"
-        android:scaleType="centerInside"
-        tools:background="@drawable/add_suceess"
-        tools:ignore="ContentDescription" />
+        tools:text="@string/add_plan_location" />
 
 </RelativeLayout>

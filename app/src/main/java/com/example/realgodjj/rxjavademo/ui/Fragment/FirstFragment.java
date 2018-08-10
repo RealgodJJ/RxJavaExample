@@ -1,6 +1,5 @@
 package com.example.realgodjj.rxjavademo.ui.Fragment;
 
-import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,14 +21,12 @@ import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.base.BaseSubscriber;
 import com.example.realgodjj.rxjavademo.utils.SharedPreferencesUtil;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
-import com.example.realgodjj.rxjavademo.widget.App;
+import com.example.realgodjj.rxjavademo.App;
 import com.example.realgodjj.rxjavademo.widget.TimeKeeperView;
 
 import org.reactivestreams.Subscription;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -104,26 +101,27 @@ public class FirstFragment extends Fragment {
         Spannable spannable = new SpannableString(timeShow);
         spannable.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 0, 8,
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        spannable.setSpan(new AbsoluteSizeSpan(160), 0, 8,
+        spannable.setSpan(new AbsoluteSizeSpan(130), 0, 8,
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         spannable.setSpan(new StyleSpan(Typeface.BOLD), 9, 19,
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        spannable.setSpan(new AbsoluteSizeSpan(60), 9, 19,
+        spannable.setSpan(new AbsoluteSizeSpan(50), 9, 19,
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         spannable.setSpan(new StyleSpan(Typeface.BOLD), 19, 23,
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-        spannable.setSpan(new AbsoluteSizeSpan(60), 19, 23,
+        spannable.setSpan(new AbsoluteSizeSpan(50), 19, 23,
                 Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         tvTimeShow.setText(spannable);
     }
 
     public void updateUI(TimePlan timePlan, SharedPreferencesUtil sharedPreferencesUtil) {
         App.timePlanList.add(timePlan);
-        sharedPreferencesUtil.setTimePlanListValue("timePlanList", App.timePlanList);
+        myRecycleViewAdapter.notifyDataSetChanged();
+        sharedPreferencesUtil.setListValue("timePlanList", App.timePlanList);
     }
 
     public List<TimePlan> refreshUI(SharedPreferencesUtil sharedPreferencesUtil) {
-        return sharedPreferencesUtil.getTimePlanListValue("timePlanList", TimePlan[].class);
+        return sharedPreferencesUtil.getListValue("timePlanList", TimePlan[].class);
     }
 }
 

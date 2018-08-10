@@ -20,7 +20,8 @@
 
     <!-- first fragment -->
     <string name="add_plan_title">添加事件的题目</string>
-    <string name="add_plan_time_location">时间\n地点</string>
+    <string name="add_plan_time">起始时间\n结束时间</string>
+    <string name="add_plan_location">添加地点</string>
     <string name="add_plan_context">添加事件的内容</string>
     <string name="add_plan_fail">添加事件失败</string>
     <string name="get_information_error">获取信息错误</string>

@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.realgodjj.rxjavademo.Adapter.MyFragmentPagerAdapter;
 import com.example.realgodjj.rxjavademo.R;
@@ -31,11 +30,12 @@ import com.example.realgodjj.rxjavademo.ui.Fragment.SecondFragment;
 import com.example.realgodjj.rxjavademo.ui.Fragment.ThirdFragment;
 import com.example.realgodjj.rxjavademo.utils.SharedPreferencesUtil;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
-import com.example.realgodjj.rxjavademo.widget.App;
+import com.example.realgodjj.rxjavademo.App;
 import com.example.realgodjj.rxjavademo.widget.CommonPopupWindow;
 import com.example.realgodjj.rxjavademo.widget.NoScrollViewPager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //添加右上角菜单栏按钮
         buttonMenu = findViewById(R.id.bt_menu);
 
-        fragmentList = new ArrayList<Fragment>();
+        fragmentList = new ArrayList<>();
 //        fragments = new Fragment[]{new FirstFragment(), new SecondFragment()};
         fragmentList.add(new FirstFragment());
         fragmentList.add(new SecondFragment());
@@ -368,9 +368,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String location = data.getStringExtra("location");
                 String context = data.getStringExtra("context");
                 Boolean isAllDay = data.getBooleanExtra("isAllDay", false);
-
-                //事件添加到timePlanList数组中，以便数据能够保存起来，最终能够显示出来
-                TimePlan timePlan = new TimePlan(title, location, context, isAllDay);
+                TimePlan timePlan;
+                if (!isAllDay) {
+                    Date startTime = (Date) data.getSerializableExtra("startTime");
+                    Date endTIme= (Date) data.getSerializableExtra("endTime");
+                    timePlan = new TimePlan(title, location, context, isAllDay, startTime, endTIme);
+                } else {
+                    //事件添加到timePlanList数组中，以便数据能够保存起来，最终能够显示出来
+                    timePlan = new TimePlan(title, location, context, isAllDay);
+                }
 //                List<Fragment> fragmentList = this.getSupportFragmentManager().getFragments();
                 ((FirstFragment) fragmentList.get(0)).updateUI(timePlan, sharedPreferencesUtil);
             }

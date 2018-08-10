@@ -1,27 +1,23 @@
 package com.example.realgodjj.rxjavademo.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.base.BaseSubscriber;
-import com.example.realgodjj.rxjavademo.widget.App;
+import com.example.realgodjj.rxjavademo.App;
 import com.example.realgodjj.rxjavademo.widget.CustomDatePicker;
 
 import org.reactivestreams.Subscription;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,7 +36,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout llStart, llEnd, llReminder;
     private EditText etTitle, etLocation, etAllDay, etStartTime, etEndTime, etContext;
     private SwitchView switchView;
-    private String nowTime, endTime;
+    private String nowTime, startTime, endTime;
 
     private static Calendar startDateTime, endDateTime;
     private static boolean isValidEndDate = true;
@@ -55,6 +51,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         judgeTime();
     }
 
+    //调整校验到正确的时间
     private void judgeTime() {
         Flowable.interval(0, 1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -70,26 +67,41 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onNext(Long aLong) {
-                        if (!isValidEndDate) {
-                            nowTime = etStartTime.getText().toString();
-                            String endDate = nowTime.split(" ")[0];
+                        if (!isValidEndDate()) {//时间不合法，只校正结束的时间
+                            startTime = etStartTime.getText().toString();
+                            String endDate = startTime.split(" ")[0];
                             String endHour;
-                            if (Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) == 23)
+                            if (Integer.parseInt(startTime.split(" ")[1].split(":")[0]) == 23) {
                                 endHour = "00";
+                                //TODO:day plus one
+                            } else if (Integer.parseInt(startTime.split(" ")[1].split(":")[0]) + 1 < 10)
+                                endHour = "0" + String.valueOf(Integer.parseInt(startTime.split(" ")[1].split(":")[0]) + 1);
                             else
-                                endHour = String.valueOf(Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) + 1);
-                            String endMinute = nowTime.split(" ")[1].split(":")[1];
+                                endHour = String.valueOf(Integer.parseInt(startTime.split(" ")[1].split(":")[0]) + 1);
+                            String endMinute = startTime.split(" ")[1].split(":")[1];
                             endTime = endDate + " " + endHour + ":" + endMinute;
 
-                            //TODO:String turn into Calendar
-                            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            try{
-                                startDateTime.setTime(sdf.parse(nowTime));
+                            //String turn into Calendar
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                            try {
+                                startDateTime.setTime(sdf.parse(startTime));
                                 endDateTime.setTime(sdf.parse(endTime));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            etStartTime.setText(nowTime);
+                            etStartTime.setText(startTime);
+                            etEndTime.setText(endTime);
+                        } else {//时间合法则正常赋予时间
+                            startTime = etStartTime.getText().toString();
+                            endTime = etEndTime.getText().toString();
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                            try {
+                                startDateTime.setTime(sdf.parse(startTime));
+                                endDateTime.setTime(sdf.parse(endTime));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            etStartTime.setText(startTime);
                             etEndTime.setText(endTime);
                         }
                     }
@@ -177,6 +189,15 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                             .putExtra("location", etLocation.getText().toString())
                             .putExtra("context", etContext.getText().toString())
                             .putExtra("isAllDay", switchView.isOpened());
+                    if (!switchView.isOpened()) {    //如果处于选择时段状态，需要传递开始和结束时间
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                        try {
+                            intent.putExtra("startTime", simpleDateFormat.parse(etStartTime.getText().toString()))
+                                    .putExtra("endTime", simpleDateFormat.parse(etEndTime.getText().toString()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     setResult(1, intent);//requestCode=1
                     finish();
                     toast(R.string.add_plan_success);
@@ -213,24 +234,33 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    //初始化开始时间为当前时间，并将结束时间暂时定为当前时间1小时后的时间
     private void initDatePicker() {
         Calendar startCalendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
         nowTime = simpleDateFormat.format(startCalendar.getTime());
         String startDate = nowTime.split(" ")[0];
-        String startHour = String.valueOf(Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) + 1);
+        String endHour;
+        if (Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) + 1 < 10)
+            endHour = "0" + String.valueOf(Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) + 1);
+        else if (Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) == 23)
+            endHour = "00";
+        else
+            endHour = String.valueOf(Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) + 1);
         String startMinute = nowTime.split(" ")[1].split(":")[1];
-        endTime = startDate + " " + startHour + ":" + startMinute;
+        endTime = startDate + " " + endHour + ":" + startMinute;
         etStartTime.setText(nowTime);
         etEndTime.setText(endTime);
-        setStartDateTime(startCalendar);
+
         Calendar endCalendar = Calendar.getInstance();
         try {
             endCalendar.setTime(simpleDateFormat.parse(endTime));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        setStartDateTime(startCalendar);
         setEndDateTime(endCalendar);
+
     }
 
     private void setStartTime() {
@@ -240,6 +270,12 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                 etStartTime.setText(time);
             }
         }, "2010-01-01 00:00", "2050-12-31 23:59");
+//        customDatePicker1.setmBackTime(new CustomDatePicker.BackTime() {
+//            @Override
+//            public void onBackTime(Date backTime) {
+//
+//            }
+//        });
         customDatePicker1.showSpecificTime(true);
         customDatePicker1.setIsLoop(false);
         customDatePicker1.show(etStartTime.getText().toString());
@@ -253,6 +289,12 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                 etEndTime.setText(time);
             }
         }, "2010-01-01 00:00", "2050-12-31 23:59");
+        customDatePicker2.setmBackTime(new CustomDatePicker.BackTime() {
+            @Override
+            public void onBackTime(Date backTime) {
+
+            }
+        });
         customDatePicker2.showSpecificTime(true);
         customDatePicker2.setIsLoop(false);
         customDatePicker2.show(etEndTime.getText().toString());

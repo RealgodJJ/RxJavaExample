@@ -25,7 +25,7 @@ public class SharedPreferencesUtil {
     public SharedPreferencesUtil(Context context, String fileName, List<TimePlan> timePlanList) {
         this.context = context;
         this.timePlanList = timePlanList;
-        sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_APPEND);
+        sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
         this.editor = sharedPreferences.edit();
         this.fileName = fileName;
         mode = Context.MODE_PRIVATE;
@@ -96,21 +96,21 @@ public class SharedPreferencesUtil {
      * 保存List类型的数据
      *
      * @param key
-     * @param timePlanList 当前时间计划列表
+     * @param list 当前时间计划列表
      */
-    public <T> void setTimePlanListValue(String key, List<T> timePlanList) {
-        if (null == timePlanList || timePlanList.size() <= 0)
+    public <T> void setListValue(String key, List<T> list) {
+        if (null == list || list.size() <= 0)
             return;
         Gson gson = new Gson();
         Type type = new TypeToken<List<T>>() {
         }.getType();
-        String timePlanJson = gson.toJson(timePlanList, type);
+        String timePlanJson = gson.toJson(list, type);
         editor.clear();
         editor.putString(key, timePlanJson);
         editor.commit();
     }
 
-    public <T> List<T> getTimePlanListValue(String key, Class<T[]> clazz) {
+    public <T> List<T> getListValue(String key, Class<T[]> clazz) {
         List<T> timePlanList = new ArrayList<T>();
         String timePlanJson = sharedPreferences.getString(key, null);
         if (timePlanJson == null) {
@@ -121,7 +121,7 @@ public class SharedPreferencesUtil {
         return new ArrayList(Arrays.asList(arr));
     }
 
-//    public <T> List<T> getTimePlanListValue(String key) {
+//    public <T> List<T> getListValue(String key) {
 //        List<T> timePlanList = new ArrayList<T>();
 //        String timePlanJson = sharedPreferences.getString(key, null);
 //        if (timePlanJson == null) {

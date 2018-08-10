@@ -10,16 +10,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.realgodjj.rxjavademo.App;
 import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.ui.AddTimePlanActivity;
-import com.example.realgodjj.rxjavademo.ui.BaseActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -62,7 +62,6 @@ public class CustomDatePicker implements View.OnClickListener {
     private boolean spanYear, spanMon, spanDay, spanHour, spanMin;
     private Calendar selectedCalender, startCalendar, endCalendar;
     private TextView tv_cancel, tv_select, hour_text, minute_text;
-//    private String startYearS, startMonthS, startDayS, startHourS, startMinuteS, endYearS, endMonthS, endDayS, endHourS, endMinuteS;
 
     public CustomDatePicker(Context context, ResultHandler resultHandler, String startDate, String endDate) {
         if (isValidDate(startDate, "yyyy-MM-dd HH:mm") && isValidDate(endDate, "yyyy-MM-dd HH:mm")) {
@@ -92,11 +91,11 @@ public class CustomDatePicker implements View.OnClickListener {
             datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             datePickerDialog.setContentView(R.layout.custom_date_picker);
             Window window = datePickerDialog.getWindow();
-//            assert window != null;
+            assert window != null;
             window.setGravity(Gravity.BOTTOM);
             WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             DisplayMetrics dm = new DisplayMetrics();
-//            assert manager != null;
+            assert manager != null;
             manager.getDefaultDisplay().getMetrics(dm);
             WindowManager.LayoutParams lp = window.getAttributes();
             lp.width = dm.widthPixels;
@@ -128,17 +127,21 @@ public class CustomDatePicker implements View.OnClickListener {
                 datePickerDialog.dismiss();
                 break;
             case R.id.tv_select:
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+//                if (null!=mBackTime){
+//                    mBackTime.onBackTime(selectedCalender.getTime());
+//                }
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                 String dateTime = simpleDateFormat.format(selectedCalender.getTime());
-                //Get begin and end time to judge
+                //获取起始和结束的时间，从而进行逻辑上的判断
                 if (App.isBeginTime) {
                     AddTimePlanActivity.setStartDateTime(selectedCalender);
                 } else {
                     AddTimePlanActivity.setEndDateTime(selectedCalender);
                 }
-                if (AddTimePlanActivity.getStartDateTime().getTime().getTime() > AddTimePlanActivity.getEndDateTime().getTime().getTime()) {
+                if (AddTimePlanActivity.getStartDateTime().getTime().getTime() > AddTimePlanActivity.getEndDateTime().getTime().getTime())
                     AddTimePlanActivity.setIsValidEndDate(false);
-                }
+                else
+                    AddTimePlanActivity.setIsValidEndDate(true);
                 handler.handle(dateTime);
                 datePickerDialog.dismiss();
                 break;
@@ -584,5 +587,15 @@ public class CustomDatePicker implements View.OnClickListener {
             convertSuccess = false;
         }
         return convertSuccess;
+    }
+
+    private BackTime mBackTime;
+
+    public void setmBackTime(BackTime mBackTime) {
+        this.mBackTime = mBackTime;
+    }
+
+    public interface BackTime{
+        void onBackTime(Date backTime);
     }
 }
