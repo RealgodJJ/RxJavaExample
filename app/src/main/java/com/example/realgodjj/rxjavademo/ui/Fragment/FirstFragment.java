@@ -116,7 +116,8 @@ public class FirstFragment extends Fragment {
 
     public void updateUI(TimePlan timePlan, SharedPreferencesUtil sharedPreferencesUtil) {
         App.timePlanList.add(timePlan);
-        myRecycleViewAdapter.notifyDataSetChanged();
+        //至刷新单独一项条目
+        myRecycleViewAdapter.notifyItemChanged(App.timePlanList.indexOf(timePlan));
         sharedPreferencesUtil.setListValue("timePlanList", App.timePlanList);
     }
 

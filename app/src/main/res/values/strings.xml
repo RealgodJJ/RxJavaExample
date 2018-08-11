@@ -56,6 +56,7 @@
     <string name="null_location">地点不能为空！</string>
     <string name="null_context">内容不能为空！</string>
     <string name="error_end_date">结束时间不合法！</string>
+    <string name="word_limit">文字长度超过了限制！</string>
 
     <!-- expansion -->
     <string name="ADD">ADD</string>

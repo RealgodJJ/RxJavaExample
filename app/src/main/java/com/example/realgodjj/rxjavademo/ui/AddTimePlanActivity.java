@@ -5,7 +5,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +13,7 @@ import android.widget.LinearLayout;
 import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.base.BaseSubscriber;
 import com.example.realgodjj.rxjavademo.App;
+import com.example.realgodjj.rxjavademo.utils.MaxInputTextWatcher;
 import com.example.realgodjj.rxjavademo.widget.CustomDatePicker;
 
 import org.reactivestreams.Subscription;
@@ -36,7 +36,8 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout llStart, llEnd, llReminder;
     private EditText etTitle, etLocation, etAllDay, etStartTime, etEndTime, etContext;
     private SwitchView switchView;
-    private String nowTime, startTime, endTime;
+    private String startTime;
+    private String endTime;
 
     private static Calendar startDateTime, endDateTime;
     private static boolean isValidEndDate = true;
@@ -67,34 +68,22 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onNext(Long aLong) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                         if (!isValidEndDate()) {//时间不合法，只校正结束的时间
                             startTime = etStartTime.getText().toString();
-                            String endDate = startTime.split(" ")[0];
-                            String endHour;
-                            if (Integer.parseInt(startTime.split(" ")[1].split(":")[0]) == 23) {
-                                endHour = "00";
-                                //TODO:day plus one
-                            } else if (Integer.parseInt(startTime.split(" ")[1].split(":")[0]) + 1 < 10)
-                                endHour = "0" + String.valueOf(Integer.parseInt(startTime.split(" ")[1].split(":")[0]) + 1);
-                            else
-                                endHour = String.valueOf(Integer.parseInt(startTime.split(" ")[1].split(":")[0]) + 1);
-                            String endMinute = startTime.split(" ")[1].split(":")[1];
-                            endTime = endDate + " " + endHour + ":" + endMinute;
-
-                            //String turn into Calendar
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                            //结束时间比开始时间多一个小时
                             try {
                                 startDateTime.setTime(sdf.parse(startTime));
-                                endDateTime.setTime(sdf.parse(endTime));
+                                endDateTime.setTime(sdf.parse(startTime));
+                                endDateTime.add(Calendar.HOUR, 1);
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
                             etStartTime.setText(startTime);
-                            etEndTime.setText(endTime);
+                            etEndTime.setText(sdf.format(endDateTime.getTime()));
                         } else {//时间合法则正常赋予时间
                             startTime = etStartTime.getText().toString();
                             endTime = etEndTime.getText().toString();
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                             try {
                                 startDateTime.setTime(sdf.parse(startTime));
                                 endDateTime.setTime(sdf.parse(endTime));
@@ -107,7 +96,6 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
     }
-
 
     @Override
     public void initViews() {
@@ -166,6 +154,8 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         btEndTime.setOnClickListener(this);
         btMore.setOnClickListener(this);
         switchView.setOnClickListener(this);
+        etTitle.addTextChangedListener(new MaxInputTextWatcher(this, etTitle, 6));
+        etLocation.addTextChangedListener(new MaxInputTextWatcher(this, etLocation, 8));
     }
 
     @Override
@@ -237,30 +227,21 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
     //初始化开始时间为当前时间，并将结束时间暂时定为当前时间1小时后的时间
     private void initDatePicker() {
         Calendar startCalendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-        nowTime = simpleDateFormat.format(startCalendar.getTime());
-        String startDate = nowTime.split(" ")[0];
-        String endHour;
-        if (Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) + 1 < 10)
-            endHour = "0" + String.valueOf(Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) + 1);
-        else if (Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) == 23)
-            endHour = "00";
-        else
-            endHour = String.valueOf(Integer.parseInt(nowTime.split(" ")[1].split(":")[0]) + 1);
-        String startMinute = nowTime.split(" ")[1].split(":")[1];
-        endTime = startDate + " " + endHour + ":" + startMinute;
-        etStartTime.setText(nowTime);
-        etEndTime.setText(endTime);
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
         Calendar endCalendar = Calendar.getInstance();
-        try {
-            endCalendar.setTime(simpleDateFormat.parse(endTime));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        endCalendar.add(Calendar.HOUR, 1);
+        String nowTime = sdf.format(startCalendar.getTime());
+//        try {
+//            startDateTime.setTime(sdf.parse(nowTime));
+//            endDateTime.setTime(startDateTime.getTime());
+//            endDateTime.add(Calendar.HOUR, 1);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
         setStartDateTime(startCalendar);
         setEndDateTime(endCalendar);
-
+        etStartTime.setText(nowTime);
+        etEndTime.setText(sdf.format(endCalendar.getTime()));
     }
 
     private void setStartTime() {
