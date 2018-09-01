@@ -159,6 +159,7 @@ public class CustomDatePicker implements View.OnClickListener {
         endDay = endCalendar.get(Calendar.DAY_OF_MONTH);
         endHour = endCalendar.get(Calendar.HOUR_OF_DAY);
         endMinute = endCalendar.get(Calendar.MINUTE);
+
         spanYear = startYear != endYear;
         spanMon = (!spanYear) && (startMonth != endMonth);
         spanDay = (!spanMon) && (startDay != endDay);
@@ -365,6 +366,26 @@ public class CustomDatePicker implements View.OnClickListener {
     }
 
     private void dayChange() {
+        day.clear();
+        int selectedYear = startCalendar.get(Calendar.YEAR);
+        int selectedMonth = selectedCalender.get(Calendar.MONTH);
+        if (selectedYear == startYear && selectedMonth == startMonth) {
+            for (int i = startDay; i <= selectedCalender.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+                day.add(formatTimeUnit(i));
+            }
+        } else if (selectedYear == endYear && selectedMonth == endMonth) {
+            for (int i = 1; i <= endDay; i++) {
+                day.add(formatTimeUnit(i));
+            }
+        } else {
+            for (int i = 1; i <= selectedCalender.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+                day.add(formatTimeUnit(i));
+            }
+        }
+        selectedCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day.get(0)));
+        day_pv.setData(day);
+        day_pv.setSelected(0);
+
         executeAnimator(day_pv);
         day_pv.postDelayed(new Runnable() {
             @Override
@@ -397,6 +418,32 @@ public class CustomDatePicker implements View.OnClickListener {
         PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 1f, 1.3f, 1f);
         //设置的动画效果
         ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY, pvhZ).setDuration(200).start();
+        //刷新日子（不同月份的天数不同）
+        if (spanMon) {
+            year.add(String.valueOf(startYear));
+            for (int i = startMonth; i <= endMonth; i++) {
+                month.add(formatTimeUnit(i));
+            }
+            for (int i = startDay; i <= startCalendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+                day.add(formatTimeUnit(i));
+            }
+
+            if ((scrollUnits & SCROLL_TYPE.HOUR.value) != SCROLL_TYPE.HOUR.value) {
+                hour.add(formatTimeUnit(startHour));
+            } else {
+                for (int i = startHour; i <= MAX_HOUR; i++) {
+                    hour.add(formatTimeUnit(i));
+                }
+            }
+
+            if ((scrollUnits & SCROLL_TYPE.MINUTE.value) != SCROLL_TYPE.MINUTE.value) {
+                minute.add(formatTimeUnit(startMinute));
+            } else {
+                for (int i = startMinute; i <= MAX_MINUTE; i++) {
+                    minute.add(formatTimeUnit(i));
+                }
+            }
+        }
     }
 
     private void executeScroll() {
@@ -460,7 +507,7 @@ public class CustomDatePicker implements View.OnClickListener {
      */
     public void setIsLoop(boolean isLoop) {
         if (canAccess) {
-            this.year_pv.setIsLoop(isLoop);
+            this.year_pv.setIsLoop(false);
             this.month_pv.setIsLoop(isLoop);
             this.day_pv.setIsLoop(isLoop);
             this.hour_pv.setIsLoop(isLoop);
@@ -595,7 +642,7 @@ public class CustomDatePicker implements View.OnClickListener {
         this.mBackTime = mBackTime;
     }
 
-    public interface BackTime{
+    public interface BackTime {
         void onBackTime(Date backTime);
     }
 }

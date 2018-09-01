@@ -231,13 +231,6 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         Calendar endCalendar = Calendar.getInstance();
         endCalendar.add(Calendar.HOUR, 1);
         String nowTime = sdf.format(startCalendar.getTime());
-//        try {
-//            startDateTime.setTime(sdf.parse(nowTime));
-//            endDateTime.setTime(startDateTime.getTime());
-//            endDateTime.add(Calendar.HOUR, 1);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
         setStartDateTime(startCalendar);
         setEndDateTime(endCalendar);
         etStartTime.setText(nowTime);
@@ -258,7 +251,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
 //            }
 //        });
         customDatePicker1.showSpecificTime(true);
-        customDatePicker1.setIsLoop(false);
+        customDatePicker1.setIsLoop(true);
         customDatePicker1.show(etStartTime.getText().toString());
         App.isBeginTime = true;
     }
@@ -277,7 +270,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
             }
         });
         customDatePicker2.showSpecificTime(true);
-        customDatePicker2.setIsLoop(false);
+        customDatePicker2.setIsLoop(true);
         customDatePicker2.show(etEndTime.getText().toString());
         App.isBeginTime = false;
     }
