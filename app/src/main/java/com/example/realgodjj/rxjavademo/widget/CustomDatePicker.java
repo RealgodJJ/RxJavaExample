@@ -81,6 +81,23 @@ public class CustomDatePicker implements View.OnClickListener {
             initDialog();
             initView();
             initListener();
+        } else {
+            canAccess = true;
+            this.context = context;
+            this.handler = resultHandler;
+            selectedCalender = Calendar.getInstance();
+            startCalendar = Calendar.getInstance();
+            endCalendar = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+            try {
+                startCalendar.setTime(sdf.parse(startDate));
+                endCalendar.setTime(sdf.parse(endDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            initDialog();
+            initView();
+            initListener();
         }
     }
 
@@ -130,14 +147,22 @@ public class CustomDatePicker implements View.OnClickListener {
 //                if (null!=mBackTime){
 //                    mBackTime.onBackTime(selectedCalender.getTime());
 //                }
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-                String dateTime = simpleDateFormat.format(selectedCalender.getTime());
-                //获取起始和结束的时间，从而进行逻辑上的判断
-                if (App.isBeginTime) {
-                    AddTimePlanActivity.setStartDateTime(selectedCalender);
+                String dateTime;
+                //判断时间选择器的类型
+                if (App.isDate) {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    dateTime = simpleDateFormat.format(selectedCalender.getTime());
+                    AddTimePlanActivity.setChooseDate(selectedCalender);
                 } else {
-                    AddTimePlanActivity.setEndDateTime(selectedCalender);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                    dateTime = simpleDateFormat.format(selectedCalender.getTime());
+                    if (App.isBeginTime) {
+                        AddTimePlanActivity.setStartDateTime(selectedCalender);
+                    } else {
+                        AddTimePlanActivity.setEndDateTime(selectedCalender);
+                    }
                 }
+                //获取起始和结束的时间，从而进行逻辑上的判断
                 if (AddTimePlanActivity.getStartDateTime().getTime().getTime() > AddTimePlanActivity.getEndDateTime().getTime().getTime())
                     AddTimePlanActivity.setIsValidEndDate(false);
                 else
@@ -150,7 +175,7 @@ public class CustomDatePicker implements View.OnClickListener {
 
     private void initParameter() {
         startYear = startCalendar.get(Calendar.YEAR);
-        startMonth = startCalendar.get(Calendar.MONTH) + 1;
+        startMonth = startCalendar.get(Calendar.MONTH);
         startDay = startCalendar.get(Calendar.DAY_OF_MONTH);
         startHour = startCalendar.get(Calendar.HOUR_OF_DAY);
         startMinute = startCalendar.get(Calendar.MINUTE);

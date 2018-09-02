@@ -375,7 +375,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     timePlan = new TimePlan(title, location, context, isAllDay, startTime, endTIme);
                 } else {
                     //事件添加到timePlanList数组中，以便数据能够保存起来，最终能够显示出来
-                    timePlan = new TimePlan(title, location, context, isAllDay);
+                    Date date = (Date) data.getSerializableExtra("date");
+                    timePlan = new TimePlan(title, location, context, isAllDay, date);
                 }
 //                List<Fragment> fragmentList = this.getSupportFragmentManager().getFragments();
                 ((FirstFragment) fragmentList.get(0)).updateUI(timePlan, sharedPreferencesUtil);

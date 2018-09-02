@@ -31,15 +31,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class AddTimePlanActivity extends BaseActivity implements View.OnClickListener {
-    private Button btCancel, btSave, btStartTime, btEndTime, btMore;
+    private Button btCancel, btSave, btDay, btStartTime, btEndTime, btMore;
     private ImageView ivLocation, ivAllDay;
-    private LinearLayout llStart, llEnd, llReminder;
-    private EditText etTitle, etLocation, etAllDay, etStartTime, etEndTime, etContext;
+    private LinearLayout llDay, llStart, llEnd, llReminder;
+    private EditText etTitle, etLocation, etAllDay, etDay, etStartTime, etEndTime, etContext;
     private SwitchView switchView;
     private String startTime;
     private String endTime;
 
-    private static Calendar startDateTime, endDateTime;
+    private static Calendar chooseDate, startDateTime, endDateTime;
     private static boolean isValidEndDate = true;
 
     @Override
@@ -105,6 +105,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
 
         btCancel = findViewById(R.id.bt_cancel_plan);
         btSave = findViewById(R.id.bt_add_plan);
+        btDay = findViewById(R.id.bt_day);
         btStartTime = findViewById(R.id.bt_start_time);
         btEndTime = findViewById(R.id.bt_end_time);
         btMore = findViewById(R.id.bt_more);
@@ -116,10 +117,12 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         etLocation = findViewById(R.id.et_location);
         etAllDay = findViewById(R.id.et_all_day);
         etStartTime = findViewById(R.id.et_start);
+        etDay = findViewById(R.id.et_day);
         etEndTime = findViewById(R.id.et_end);
         etContext = findViewById(R.id.et_context);
 
         switchView = findViewById(R.id.sv_all_day);
+        llDay = findViewById(R.id.ll_day);
         llStart = findViewById(R.id.ll_start);
         llEnd = findViewById(R.id.ll_end);
         llReminder = findViewById(R.id.ll_reminder);
@@ -150,6 +153,7 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         super.initListeners();
         btCancel.setOnClickListener(this);
         btSave.setOnClickListener(this);
+        btDay.setOnClickListener(this);
         btStartTime.setOnClickListener(this);
         btEndTime.setOnClickListener(this);
         btMore.setOnClickListener(this);
@@ -179,11 +183,19 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                             .putExtra("location", etLocation.getText().toString())
                             .putExtra("context", etContext.getText().toString())
                             .putExtra("isAllDay", switchView.isOpened());
+                    SimpleDateFormat simpleDateFormat;
                     if (!switchView.isOpened()) {    //如果处于选择时段状态，需要传递开始和结束时间
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                         try {
                             intent.putExtra("startTime", simpleDateFormat.parse(etStartTime.getText().toString()))
                                     .putExtra("endTime", simpleDateFormat.parse(etEndTime.getText().toString()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        try {
+                            intent.putExtra("date", simpleDateFormat.parse(etDay.getText().toString()));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -199,14 +211,20 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                 if (isOpened) {
                     ivAllDay.setImageResource(R.drawable.all_day_light);
                     etAllDay.setText(R.string.all_day);
+                    llDay.setVisibility(View.VISIBLE);
                     llStart.setVisibility(View.GONE);
                     llEnd.setVisibility(View.GONE);
                 } else {
                     ivAllDay.setImageResource(R.drawable.all_day_dark);
                     etAllDay.setText(R.string.not_all_day);
+                    llDay.setVisibility(View.GONE);
                     llStart.setVisibility(View.VISIBLE);
                     llEnd.setVisibility(View.VISIBLE);
                 }
+                break;
+
+            case R.id.bt_day:
+                setDay();
                 break;
 
             case R.id.bt_start_time:
@@ -228,13 +246,30 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
     private void initDatePicker() {
         Calendar startCalendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Calendar endCalendar = Calendar.getInstance();
         endCalendar.add(Calendar.HOUR, 1);
         String nowTime = sdf.format(startCalendar.getTime());
+        String nowTime1 = sdf1.format(startCalendar.getTime());
+        setChooseDate(startCalendar);
         setStartDateTime(startCalendar);
         setEndDateTime(endCalendar);
+        etDay.setText(nowTime1);
         etStartTime.setText(nowTime);
         etEndTime.setText(sdf.format(endCalendar.getTime()));
+    }
+
+    private void setDay() {
+        CustomDatePicker customDatePicker1 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
+            @Override
+            public void handle(String time) {
+                etDay.setText(time);
+            }
+        }, "2010-01-01", "2050-12-31");
+        customDatePicker1.showSpecificTime(false);
+        customDatePicker1.setIsLoop(true);
+        customDatePicker1.show(etDay.getText().toString());
+        App.isDate = true;
     }
 
     private void setStartTime() {
@@ -273,6 +308,14 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
         customDatePicker2.setIsLoop(true);
         customDatePicker2.show(etEndTime.getText().toString());
         App.isBeginTime = false;
+    }
+
+    public static Calendar getChooseDate() {
+        return chooseDate;
+    }
+
+    public static void setChooseDate(Calendar chooseDate) {
+        AddTimePlanActivity.chooseDate = chooseDate;
     }
 
     public static Calendar getStartDateTime() {

@@ -12,13 +12,14 @@ public class TimePlan{
     private String location;
     private String context;
     private boolean isAllDay;
-    private Date startDateTime = null, endDateTime = null;
+    private Date date = null, startDateTime = null, endDateTime = null;
 
-    public TimePlan(String title, String location, String context, boolean isAllDay) {
+    public TimePlan(String title, String location, String context, boolean isAllDay, Date date) {
         this.title = title;
         this.location = location;
         this.context = context;
         this.isAllDay = isAllDay;
+        this.date =date;
     }
 
     public TimePlan(String title, String location, String context, boolean isAllDay, Date startDateTime, Date endDateTime) {
@@ -69,6 +70,14 @@ public class TimePlan{
 
     public void setAllDay(boolean isAllDay) {
         this.isAllDay = isAllDay;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Date getStartDateTime() {
