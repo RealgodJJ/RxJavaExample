@@ -11,8 +11,8 @@ import com.example.realgodjj.rxjavademo.R;
 
 public class MaxInputTextWatcher implements TextWatcher {
     private Context context;
-    private EditText editText = null;
-    private int maxLength = 0;
+    private EditText editText;
+    private int maxLength;
 
     public MaxInputTextWatcher(Context context, EditText editText, int maxLength) {
         this.context = context;

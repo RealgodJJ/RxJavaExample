@@ -17,6 +17,7 @@ import java.util.Locale;
 
 public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdapter.ViewHolder> {
     private List<TimePlan> timePlanList;
+    private OnRecycleViewItemListener onRecycleViewItemListener;
 
     public MyRecycleViewAdapter(List<TimePlan> timePlanList) {
         this.timePlanList = timePlanList;
@@ -31,15 +32,30 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyRecycleViewAdapter.ViewHolder holder, int position) {
-        holder.tvPlanTitle.setText(timePlanList.get(position).getTitle());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+    public void onBindViewHolder(@NonNull final MyRecycleViewAdapter.ViewHolder holder, int position) {
+        //实现设定事件的显示
+        holder.tvPlanTheme.setText(timePlanList.get(position).getTheme());
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String allDay = "全天";
-        holder.tvPlanTime.setText(timePlanList.get(position).isAllDay() ? allDay :
-                simpleDateFormat.format(timePlanList.get(position).getStartDateTime()) + "\n"
-                + simpleDateFormat.format(timePlanList.get(position).getEndDateTime()));
+        holder.tvPlanTime.setText(timePlanList.get(position).isAllDay() ?
+                simpleDateFormat2.format(timePlanList.get(position).getDate()) + allDay :
+                simpleDateFormat1.format(timePlanList.get(position).getStartDateTime()) + "\n"
+                + simpleDateFormat1.format(timePlanList.get(position).getEndDateTime()));
         holder.tvPlanContext.setText(timePlanList.get(position).getContext());
         holder.tvPlanLocation.setText(timePlanList.get(position).getLocation());
+
+        //实现事项的点击事件
+        if (onRecycleViewItemListener != null) {
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = holder.getLayoutPosition();
+                    onRecycleViewItemListener.onItemClick(holder.itemView, position);
+                }
+            });
+        }
     }
 
     @Override
@@ -47,19 +63,31 @@ public class MyRecycleViewAdapter extends RecyclerView.Adapter<MyRecycleViewAdap
         return timePlanList.size();
     }
 
+    public TimePlan getItem(int position) {
+        return timePlanList.get(position);
+    }
+
+    public void setOnRecycleViewItemListener(OnRecycleViewItemListener onRecycleViewItemListener) {
+        this.onRecycleViewItemListener = onRecycleViewItemListener;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         @SuppressLint("StaticFieldLeak")
-        TextView tvPlanTitle;
+        TextView tvPlanTheme;
         TextView tvPlanContext;
         TextView tvPlanTime;
         TextView tvPlanLocation;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvPlanTitle = itemView.findViewById(R.id.tv_list_title);
+            tvPlanTheme = itemView.findViewById(R.id.tv_list_title);
             tvPlanTime = itemView.findViewById(R.id.tv_list_time);
             tvPlanContext = itemView.findViewById(R.id.tv_list_context);
             tvPlanLocation = itemView.findViewById(R.id.tv_list_location);
         }
+    }
+
+    public interface OnRecycleViewItemListener {
+        void onItemClick(View view, int position);
     }
 }

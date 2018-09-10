@@ -1,30 +1,31 @@
 package com.example.realgodjj.rxjavademo.utils;
 
-import android.widget.ImageView;
-
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-public class TimePlan{
-//    private ImageView icon;
-    private String title;
+public class TimePlan implements Serializable {
+    //    private ImageView icon;
+    private String theme;
     private String location;
     private String context;
     private boolean isAllDay;
     private Date date = null, startDateTime = null, endDateTime = null;
 
-    public TimePlan(String title, String location, String context, boolean isAllDay, Date date) {
-        this.title = title;
+    public TimePlan() {
+
+    }
+
+    public TimePlan(String theme, String location, String context, boolean isAllDay, Date date) {
+        this.theme = theme;
         this.location = location;
         this.context = context;
         this.isAllDay = isAllDay;
-        this.date =date;
+        this.date = date;
     }
 
-    public TimePlan(String title, String location, String context, boolean isAllDay, Date startDateTime, Date endDateTime) {
+    public TimePlan(String theme, String location, String context, boolean isAllDay, Date startDateTime, Date endDateTime) {
 //        this.icon = icon;
-        this.title = title;
+        this.theme = theme;
         this.location = location;
         this.context = context;
         this.isAllDay = isAllDay;
@@ -40,12 +41,12 @@ public class TimePlan{
 //        this.icon = icon;
 //    }
 
-    public String getTitle() {
-        return title;
+    public String getTheme() {
+        return theme;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public String getLocation() {

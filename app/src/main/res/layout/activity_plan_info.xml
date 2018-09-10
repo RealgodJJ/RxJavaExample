@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.PlanInfoActivity">
+
+    <include
+        android:id="@+id/activity_plan_info_top_bar"
+        layout="@layout/activity_plan_info_top_bar" />
+
+    <LinearLayout style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_theme"
+            style="@style/iv_style"
+            android:src="@drawable/theme"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_plan_theme"
+            style="@style/et_style"
+            android:enabled="false"
+            android:hint="@string/theme"
+            android:textColor="@color/black"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_location"
+            style="@style/iv_style"
+            android:src="@drawable/location_light"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_location"
+            style="@style/et_style"
+            android:enabled="false"
+            android:hint="@string/location"
+            android:textColor="@color/black"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_day"
+        style="@style/screen_margin"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_day"
+            style="@style/iv_style"
+            android:src="@drawable/calendar"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_day"
+            style="@style/et_style"
+            android:enabled="false"
+            android:hint="@string/all_day"
+            android:textColor="@color/black"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_start"
+        style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_start"
+            style="@style/iv_style"
+            android:src="@drawable/start"
+            tools:ignore="ContentDescription" />
+
+
+        <EditText
+            android:id="@+id/et_start"
+            style="@style/et_style"
+            android:enabled="false"
+            android:hint="@string/start"
+            android:textColor="@color/black"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_end"
+        style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_end"
+            style="@style/iv_style"
+            android:src="@drawable/end"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_end"
+            style="@style/et_style"
+            android:enabled="false"
+            android:hint="@string/end"
+            android:textColor="@color/black"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/screen_margin">
+
+        <ImageView
+            android:id="@+id/iv_context"
+            style="@style/iv_style"
+            android:src="@drawable/context"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_context"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/context"
+            android:textColor="@color/black"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_reminder"
+        style="@style/screen_margin"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_reminder"
+            style="@style/iv_style"
+            android:src="@drawable/reminder"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/et_reminder"
+            style="@style/et_style"
+            android:hint="@string/reminder"
+            android:textColor="@color/black"
+            tools:ignore="TextFields" />
+
+    </LinearLayout>
+
+</LinearLayout>

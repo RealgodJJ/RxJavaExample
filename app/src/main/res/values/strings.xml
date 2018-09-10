@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">app_name</string>
+    <string name="app_name">爱你没差</string>
     <string name="key_again_exit">再按一次回退键退出程序</string>
     <string name="clock">时钟</string>
     <string name="alarm_clock">闹钟</string>
@@ -9,6 +9,7 @@
     <string name="set_alarm">设定闹钟</string>
     <string name="add_time_plan_space">添加时间计划\t\t\t</string>
     <string name="add_time_plan">添加时间计划</string>
+    <string name="check_time_plan">查看时间计划</string>
     <string name="add_memorial_day">添加纪念日</string>
     <string name="edit">编辑</string>
     <string name="tip_permission">该应用需要获取存储空间，为你存储个人信息；\n否则，您将无法正常使用该应用</string>
@@ -25,6 +26,7 @@
     <string name="add_plan_context">添加事件的内容</string>
     <string name="add_plan_fail">添加事件失败</string>
     <string name="get_information_error">获取信息错误</string>
+    <string name="task">事件%d</string>
 
     <!-- 日期滚动选项栏 -->
     <string name="cancle">取消</string>
@@ -43,7 +45,7 @@
 
     <!-- 添加时间计划页面 -->
     <string name="add_plan_success">添加计划成功！</string>
-    <string name="title">标题</string>
+    <string name="theme">主题</string>
     <string name="location">地点</string>
     <string name="all_day">全天</string>
     <string name="not_all_day">选择时段</string>

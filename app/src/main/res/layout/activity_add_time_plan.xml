@@ -13,10 +13,16 @@
 
     <LinearLayout style="@style/screen_margin">
 
+        <ImageView
+            android:id="@+id/iv_theme"
+            style="@style/iv_style"
+            android:src="@drawable/theme"
+            tools:ignore="ContentDescription" />
+
         <EditText
-            android:id="@+id/et_plan_title"
+            android:id="@+id/et_plan_theme"
             style="@style/et_style"
-            android:hint="@string/title"
+            android:hint="@string/theme"
             tools:ignore="TextFields" />
 
     </LinearLayout>

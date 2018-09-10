@@ -180,7 +180,7 @@ public class CustomDatePicker implements View.OnClickListener {
         startHour = startCalendar.get(Calendar.HOUR_OF_DAY);
         startMinute = startCalendar.get(Calendar.MINUTE);
         endYear = endCalendar.get(Calendar.YEAR);
-        endMonth = endCalendar.get(Calendar.MONTH) + 1;
+        endMonth = endCalendar.get(Calendar.MONTH);
         endDay = endCalendar.get(Calendar.DAY_OF_MONTH);
         endHour = endCalendar.get(Calendar.HOUR_OF_DAY);
         endMinute = endCalendar.get(Calendar.MINUTE);

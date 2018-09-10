@@ -1,5 +1,6 @@
 package com.example.realgodjj.rxjavademo.ui.Fragment;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,10 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.realgodjj.rxjavademo.Adapter.MyRecycleViewAdapter;
 import com.example.realgodjj.rxjavademo.R;
 import com.example.realgodjj.rxjavademo.base.BaseSubscriber;
+import com.example.realgodjj.rxjavademo.ui.PlanInfoActivity;
 import com.example.realgodjj.rxjavademo.utils.SharedPreferencesUtil;
 import com.example.realgodjj.rxjavademo.utils.TimePlan;
 import com.example.realgodjj.rxjavademo.App;
@@ -30,29 +33,28 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment implements MyRecycleViewAdapter.OnRecycleViewItemListener {
     private TimeKeeperView timeKeeperView;
     private String timeShow;
     private TextView tvTimeShow;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss,yyyy/MM/dd  E", Locale.getDefault());
     private RecyclerView myRecyclerView;
     private MyRecycleViewAdapter myRecycleViewAdapter;
-
-    //PlanList中的控件
-//    private TextView tvPlanTitle, tvPlanContext, tvPlanlocation;
-//    private ImageView ivIcon;
+    private TimePlan timePlanItem;//代表选中的时间计划选项
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         initView(view);
+        initListeners();
         makeTime();
         return view;
     }
@@ -69,6 +71,22 @@ public class FirstFragment extends Fragment {
         //初始化并设置适配器view
         myRecycleViewAdapter = new MyRecycleViewAdapter(App.timePlanList);
         myRecyclerView.setAdapter(myRecycleViewAdapter);
+    }
+
+    private void initListeners() {
+        myRecycleViewAdapter.setOnRecycleViewItemListener(this);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        //实现页面切换并显示相关的备忘信息
+        Toast.makeText(getContext(), getString(R.string.task, position), Toast.LENGTH_SHORT).show();
+        timePlanItem = myRecycleViewAdapter.getItem(position);
+        Intent intent = new Intent();
+        //使用TimePlan继承Serializable，将点击选中的TimePlan传输过去
+        intent.putExtra("timePlan", myRecycleViewAdapter.getItem(position));
+        intent.setClass(Objects.requireNonNull(getContext()), PlanInfoActivity.class);
+        startActivity(intent);
     }
 
     private void makeTime() {
