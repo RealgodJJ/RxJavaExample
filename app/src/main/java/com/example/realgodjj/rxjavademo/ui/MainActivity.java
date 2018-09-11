@@ -370,23 +370,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (requestCode == addActivityRequestCodeOfPage0) {
             setPageClock();
             if (resultCode == 1) {
-                //TODO
-//                TimePlan timePlan = (TimePlan) data.getSerializableExtra("timePlan");
-                String title = data.getStringExtra("theme");
-                String location = data.getStringExtra("location");
-                String context = data.getStringExtra("context");
-                Boolean isAllDay = data.getBooleanExtra("isAllDay", false);
-                TimePlan timePlan;
-                if (!isAllDay) {
-                    Date startTime = (Date) data.getSerializableExtra("startTime");
-                    Date endTIme = (Date) data.getSerializableExtra("endTime");
-                    timePlan = new TimePlan(title, location, context, isAllDay, startTime, endTIme);
-                } else {
-                    //事件添加到timePlanList数组中，以便数据能够保存起来，最终能够显示出来
-                    Date date = (Date) data.getSerializableExtra("date");
-                    timePlan = new TimePlan(title, location, context, isAllDay, date);
-                }
-                List<Fragment> fragmentList = this.getSupportFragmentManager().getFragments();
+                TimePlan timePlan = (TimePlan) data.getSerializableExtra("timePlan");
                 ((FirstFragment) fragmentList.get(0)).updateUI(timePlan, sharedPreferencesUtil);
             }
         } else if (requestCode == addActivityRequestCodeOfPage1) {

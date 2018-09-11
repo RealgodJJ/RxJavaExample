@@ -19,6 +19,7 @@ import com.example.realgodjj.rxjavademo.widget.CustomDatePicker;
 
 import org.reactivestreams.Subscription;
 
+import java.net.SocketImpl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -179,75 +180,38 @@ public class AddTimePlanActivity extends BaseActivity implements View.OnClickLis
                 else if (etContext.getText().toString().equals(""))
                     toast(R.string.null_context);
                 else {
-                    //TODO
                     Intent intent = new Intent();
-                    intent.putExtra("theme", etTheme.getText().toString())
-                            .putExtra("location", etLocation.getText().toString())
-                            .putExtra("context", etContext.getText().toString())
-                            .putExtra("isAllDay", switchView.isOpened());
+                    String theme = etTheme.getText().toString();
+                    String location = etLocation.getText().toString();
+                    String context = etContext.getText().toString();
+                    TimePlan timePlan = null;
                     SimpleDateFormat simpleDateFormat;
-                    if (!switchView.isOpened()) {    //如果处于选择时段状态，需要传递开始和结束时间
-                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                    if (switchView.isOpened()) {
+                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         try {
-                            intent.putExtra("startTime", simpleDateFormat.parse(etStartTime.getText().toString()))
-                                    .putExtra("endTime", simpleDateFormat.parse(etEndTime.getText().toString()));
+                            Date date = simpleDateFormat.parse(etDay.getText().toString());
+                            timePlan = new TimePlan(theme, location, context,
+                                    switchView.isOpened(), date);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
                         try {
-                            intent.putExtra("date", simpleDateFormat.parse(etDay.getText().toString()));
+                            Date startTime = simpleDateFormat.parse(etStartTime.getText().toString());
+                            Date endTime = simpleDateFormat.parse(etEndTime.getText().toString());
+                            timePlan = new TimePlan(theme, location, context,
+                                    switchView.isOpened(), startTime, endTime);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     }
+                    intent.putExtra("timePlan", timePlan);
                     setResult(1, intent);//requestCode=1
                     finish();
                     toast(R.string.add_plan_success);
                 }
                 break;
-
-//            case R.id.bt_add_plan:
-//                if (etTheme.getText().toString().equals(""))
-//                    toast(R.string.null_title);
-//                else if (etLocation.getText().toString().equals(""))
-//                    toast(R.string.null_location);
-//                else if (etContext.getText().toString().equals(""))
-//                    toast(R.string.null_context);
-//                else {
-//                    Intent intent = new Intent();
-//                    String theme = etTheme.getText().toString();
-//                    String location = etLocation.getText().toString();
-//                    String context = etContext.getText().toString();
-//                    TimePlan timePlan = null;
-//                    SimpleDateFormat simpleDateFormat;
-//                    if (switchView.isOpened()) {
-//                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//                        try {
-//                            Date date = simpleDateFormat.parse(etDay.getText().toString());
-//                            timePlan = new TimePlan(theme, location, context,
-//                                    switchView.isOpened(), date);
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//                    } else {
-//                        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm", Locale.getDefault());
-//                        try {
-//                            Date startTime = simpleDateFormat.parse(etStartTime.getText().toString());
-//                            Date endTime = simpleDateFormat.parse(etEndTime.getText().toString());
-//                            timePlan = new TimePlan(theme, location, context,
-//                                    switchView.isOpened(), startTime, endTime);
-//                        } catch (ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    intent.putExtra("timePlan", timePlan);
-//                    setResult(1, intent);//requestCode=1
-//                    finish();
-//                    toast(R.string.add_plan_success);
-//                }
-//                break;
 
             case R.id.sv_all_day:
                 boolean isOpened = switchView.isOpened();
