@@ -13,4 +13,5 @@ public class App extends Application {
     public static List<TimePlan> timePlanList = new ArrayList<>();
     public static boolean isDate = false;//是否为设定全天的选择器
     public static boolean isBeginTime = false;//是否为设定开始时间的时间选择器
+//    public
 }

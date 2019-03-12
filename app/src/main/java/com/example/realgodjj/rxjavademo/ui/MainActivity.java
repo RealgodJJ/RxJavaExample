@@ -113,12 +113,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         sharedPreferencesUtil = new SharedPreferencesUtil(MainActivity.this, App.CONFIG, App.timePlanList);
         App.timePlanList = ((FirstFragment) fragmentList.get(0)).refreshUI(sharedPreferencesUtil);
-        frameClock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override

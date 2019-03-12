@@ -110,13 +110,13 @@ public class SharedPreferencesUtil {
         editor.commit();
     }
 
-    public <T> List<T> getListValue(String key, Class<T[]> clazz) {
-        List<T> timePlanList = new ArrayList<T>();
+    public <T> List<T> getListValue(String key, Class<T[]> aClass) {
+        List<T> timePlanList = new ArrayList<>();
         String timePlanJson = sharedPreferences.getString(key, null);
         if (timePlanJson == null) {
             return timePlanList;
         }
-        T[] arr = new Gson().fromJson(timePlanJson, clazz);
+        T[] arr = new Gson().fromJson(timePlanJson, aClass);
         //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner
         return new ArrayList(Arrays.asList(arr));
     }

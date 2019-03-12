@@ -47,7 +47,7 @@ public class FirstFragment extends Fragment implements MyRecycleViewAdapter.OnRe
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss,yyyy/MM/dd  E", Locale.getDefault());
     private RecyclerView myRecyclerView;
     private MyRecycleViewAdapter myRecycleViewAdapter;
-    private TimePlan timePlanItem;//代表选中的时间计划选项
+//    private TimePlan timePlanItem;//代表选中的时间计划选项
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -81,7 +81,7 @@ public class FirstFragment extends Fragment implements MyRecycleViewAdapter.OnRe
     public void onItemClick(View view, int position) {
         //实现页面切换并显示相关的备忘信息
         Toast.makeText(getContext(), getString(R.string.task, position), Toast.LENGTH_SHORT).show();
-        timePlanItem = myRecycleViewAdapter.getItem(position);
+//        timePlanItem = myRecycleViewAdapter.getItem(position);
         Intent intent = new Intent();
         //使用TimePlan继承Serializable，将点击选中的TimePlan传输过去
         intent.putExtra("timePlan", myRecycleViewAdapter.getItem(position));
